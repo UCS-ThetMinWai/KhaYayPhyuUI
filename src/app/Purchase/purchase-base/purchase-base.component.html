@@ -1,0 +1,19 @@
+<mat-list class="left">
+  <mat-list-item *ngFor="let purchase of purchaseList" (click)="showDetail(purchase.boId)"
+                 class="{{detailPurchase != null && detailPurchase.id == purchase.id ? 'active' : ''}}">
+    <span #item>{{purchase.boId}}</span>
+  </mat-list-item>
+</mat-list>
+<div class="right" *ngIf="detailPurchase!=null" style="height: 400px;vertical-align: top;">
+  <button mat-raised-button (click)="remove(detailPurchase.boId)" color="warn">Delete</button>
+  <div>
+    <tr>
+      <td>BoId :</td>
+      <td>{{detailPurchase.boId}}</td>
+    </tr>
+    <tr>
+      <td>Status :</td>
+      <td>{{detailPurchase.saleStatus}}</td>
+    </tr>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+:host {
+  display: block;
+  width:100%;
+}
+
+mat-toolbar {
+  display: block;
+  width:100%;
+  padding-top: 15px;
+  cursor: pointer;
+}
+
+.menu-button {
+  display: inline-block;
+  width:100px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.findIcon {
+  position: absolute;
+  right: 15px;
+
+}
+
+.search {
+  border-bottom: thin solid #ccc;
+  float: right;
+  width:200px;
+  right: 40px;
+  position: absolute;
+}
+
+.active {
+  border: 5px solid #241571;
+  border-radius: 20px;
+  background-color: #241571;
+  font-size: 1.2em;
+  color: black;
+}

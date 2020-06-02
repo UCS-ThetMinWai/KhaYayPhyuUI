@@ -1,0 +1,10 @@
+
+<form style="width: 600px">
+  <mat-form-field style="width: 590px">
+    <input matInput placeholder="New Product Name" name="raw-product-name" required [(ngModel)]="rawProduct.productName">
+  </mat-form-field>
+  <mat-form-field style="width: 590px">
+    <input matInput placeholder="New Product Type" name="raw-product-type" required [(ngModel)]="rawProduct.productType">
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="save()"><fa-icon [icon]="saveIcon" style="font-size: 20px"></fa-icon>Save</button>
+</form>

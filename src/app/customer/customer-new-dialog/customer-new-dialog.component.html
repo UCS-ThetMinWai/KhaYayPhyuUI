@@ -1,0 +1,25 @@
+<form>
+  <span class="cancel-button"(click)="closeDialog()">x</span>
+  <mat-form-field style="width: 600px">
+    <input matInput placeholder="Name" name="name" required="Invalid name!" [(ngModel)]="customer.name"/>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Age" name="age"
+           [(ngModel)]="customer.age"/>
+  </mat-form-field>
+  <mat-form-field><input matInput placeholder="Phone Number"
+                         name="phoneNumber"
+                         [(ngModel)]="customer.phoneNumber"/></mat-form-field>
+
+  <mat-form-field><textarea row="20" cols="5" placeholder="Address" matInput
+                            name="address"
+                            [(ngModel)]="customer.address"></textarea></mat-form-field>
+
+  <button mat-raised-button
+          style="float: right; bottom: -20px; background: blue; color: aliceblue;margin-bottom: 10px"
+          (click)="save()">Save
+  </button>
+  <button mat-raised-button class="reset-button" type="reset"
+          style="float: right;right: 70px; background: red; color: aliceblue;">Cancel
+  </button>
+</form>

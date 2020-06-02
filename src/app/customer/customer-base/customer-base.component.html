@@ -1,0 +1,22 @@
+<mat-list class="left">
+  <mat-list-item *ngFor="let customer of customerList" (click)="showDetail(customer.boId)"
+                 class="{{detailCustomer != null && detailCustomer.id == customer.id ? ' active' : ''}}">
+    <span #item>{{customer.name}}</span>
+  </mat-list-item>
+</mat-list>
+<div class="right" *ngIf="detailCustomer != null" style="hight: 400px;vertical-align: top;">
+  here
+  <table mat-table [dataSource]="customerList">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
+  </table>
+  <div>
+    <button mat-raised-button  (click)="save()" color="primary">Save</button>
+    <button mat-raised-button (click)="remove(detailCustomer.boId)" color="warn">Delete</button>
+  </div>
+</div>
+

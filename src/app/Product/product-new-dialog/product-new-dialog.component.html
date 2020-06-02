@@ -1,0 +1,29 @@
+<form>
+  <span class="cancel-button" (click)="closeDialog()">x</span>
+  <mat-form-field style="width: 600px">
+    <input matInput placeholder="Product Name" name="name" required="Invalid name!" [(ngModel)]="product.productName"/>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="date" placeholder="Packing Date" name="type" [(ngModel)]="product.peckagingDate"/>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Raw Product Name</mat-label>
+    <mat-select name="raw-product-name" >
+      <mat-option *ngFor="let rp of rawProductList" (click)="updateRaw(rp)" [value]="rp.productName">{{rp.productName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Packing Type</mat-label>
+  <mat-select [(ngModel)]="product.peckagingType" name="packingType">
+    <mat-option value="PACK">PACK</mat-option>
+    <mat-option value="CARD">CARD</mat-option>
+  </mat-select>
+  </mat-form-field>
+  <button mat-raised-button style="float: right; bottom: -20px; background: blue; color: aliceblue;margin-bottom: 10px"
+          (click)="save()">Save
+  </button>
+  <button mat-raised-button class="reset-button" type="reset"
+          style="float: right;right: 70px; background: red; color: aliceblue;">Cancel
+  </button>
+</form>
+

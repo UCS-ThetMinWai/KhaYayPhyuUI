@@ -1,0 +1,32 @@
+
+<mat-list class="left">
+  <mat-list-item *ngFor="let user of userList" (click)="showDetail(user.boId)"
+     class="{{detailUser != null && detailUser.id == user.id ? ' active' : ''}}">
+    <span #item >{{user.name}}</span>
+  </mat-list-item>
+</mat-list>
+<div class="right" *ngIf="detailUser != null" style="hight: 400px;vertical-align: top;" >
+  <div>
+    <tr>
+      <td>User_Name   :</td>
+      <td>{{detailUser.name}}</td>
+    </tr>
+    <tr>
+      <td>BoId   :</td>
+      <td>{{detailUser.boId}}</td>
+    </tr>
+    <tr>
+      <td>Age   :</td>
+      <td>{{detailUser.age}}</td>
+    </tr>
+    <tr>
+      <td>Address  :</td>
+      <td>{{detailUser.address}}</td>
+    </tr>
+    <tr>
+      <td>Role  :</td>
+      <td>{{detailUser.role}}</td>
+    </tr>
+  </div>
+</div>
+

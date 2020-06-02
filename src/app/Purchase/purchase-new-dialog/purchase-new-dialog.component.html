@@ -1,0 +1,19 @@
+<form>
+  <span class="cancel-button"><button mat-button mat-dialog-close class="content" (click)="closeDialog()" style="width: 3px;" color="white">x</button></span>
+  <mat-form-field style="width: 600px">
+    <input matInput type="date" placeholder="Date" name="date" required="Invalid name!" [(ngModel)]="purchase.purchaseDate"/>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Total" name="total" [(ngModel)]="purchase.total"/>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Pay Amount" name="payAmount" [(ngModel)]="purchase.payAmount">
+  </mat-form-field>
+  <button mat-raised-button style="float: right; bottom: -20px; background: blue; color: aliceblue;margin-bottom: 10px"
+          (click)="save()">Save
+  </button>
+  <button mat-raised-button class="reset-button" type="reset"
+          style="float: right;right: 70px; background: red; color: aliceblue;">Cancel
+  </button>
+</form>
+

@@ -1,0 +1,48 @@
+.left {
+  width: 300px;
+  display: inline-block;
+}
+
+mat-form-field {
+  height: 100px;
+  width:200px;
+}
+
+.right {
+  width: calc(100% - 400px);
+  display: inline-block;
+  padding:10px;
+}
+
+mat-list-item {
+  border-bottom: thin solid #ccc;
+}
+
+mat-list-item:last-child {
+  border-bottom: 0 solid #ccc;
+}
+
+mat-list-item:hover{
+  cursor: pointer;
+}
+
+.content {
+  padding:10px;
+  border: thin solid dodgerblue;
+  margin:5px;
+  border-radius: 9px;
+}
+
+.active {
+  background-color: dodgerblue;
+}
+span.active {
+  color:green;
+  background-color: lightgreen;
+}
+
+.content:hover{
+  background-color: lightgreen;
+  cursor: pointer;
+}
+

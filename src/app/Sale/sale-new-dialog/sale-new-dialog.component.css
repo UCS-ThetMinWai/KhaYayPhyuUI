@@ -1,0 +1,19 @@
+:host {
+  display: inline-block;
+  position:relative;
+  width: 600px;
+}
+.cancel-button {
+  position:absolute;
+  right:-10px;
+  top:-20px;
+}
+
+.reset-button {
+  position: absolute;
+  bottom: -10px;
+}
+
+mat-form-field {
+  display: block;
+}
