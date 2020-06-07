@@ -4,8 +4,9 @@
   <div class="menu-button" (click)="updateStatus('customer')" class="{{selected == 'customer' ? 'active' : ''}}">Customer</div>
   <div class="menu-button" (click)="updateStatus('sale')" class="{{selected == 'sale' ? 'active' : ''}}">Sale</div>
   <div class="menu-button" (click)="updateStatus('purchase')" class="{{selected == 'purchase' ? 'active' : ''}}">Purchase</div>
-  <input matInput type="search" placeholder="Search" name="searchText" [(ngModel)]="searchText" class="search" (keyup.enter)="search()"/><fa-icon style="float: right; position: absolute;right: 240px" [icon]="findIcon"></fa-icon>
-  <fa-icon [icon]="plusCircleIcon" (click)="openDialog()" class="findIcon"></fa-icon>
+  <input matInput type="search" placeholder="Search" name="searchText" [(ngModel)]="searchText" class="search" (keyup.enter)="search()"/>
+  <span class="fa fa-plus" style="float: right; position: absolute;right: 240px" (click)="openDialog()" ></span>
+  <span (click)="openDialog()" class="fa fa-search"></span>
 </mat-toolbar>
 <!-- mat-tab-group>
   <mat-tab label="Product">

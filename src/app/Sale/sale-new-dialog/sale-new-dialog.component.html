@@ -1,51 +1,52 @@
-<form style="width: 600px">
-  <span class="cancel-button" (click)="closeDialog()">x</span>
-  <mat-form-field>
-    <input matInput type="date" placeholder="Packing Date" required name="date" [(ngModel)]="sale.saleDate"/>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput type="number" min="0" placeholder="Pay Amount" name="payAmount" [(ngModel)]="sale.payAmount">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Total" name="total" [(ngModel)]="sale.total">
-  </mat-form-field>
-  <mat-form-field>
+<form style="width: 800px;height: calc(100vh - 100px);">
+  <span class="cancel-button fa fa-times-circle"  style="color:tomato;padding:3px;" (click)="closeDialog()" ></span>
+  <span style="position:absolute;right: 10px;">{{sale.saleDate|date}}</span>
+  <mat-form-field style="width:80%;">
     <mat-label>Customer Name</mat-label>
     <mat-select name="raw-product-name">
       <mat-option *ngFor="let customer of customerList" (click)="updateCustomer(customer)"
                   [value]="customer.name">{{customer.name}}</mat-option>
     </mat-select>
   </mat-form-field>
-  <table style="display: block;width:100%; border: thin solid #ccc">
+  <table class="table table-striped">
     <tr>
-      <th>#</th>
+      <th width="50">#</th>
       <th>Name</th>
-      <th>Quantity</th>
-      <th (click)="addNewSaleOrder()">+</th>
-    </tr>
-    <tr *ngFor="let saleOrder of sale.saleOrderList">
-      <td>1</td>
-      <td>
-        <input matInput type="text" style="border: thin solid black" list="name" name="test"
-               (change)="updatePrice(saleOrder, $event.target.value)">
-      </td>
-      <td>
-        <input matInput style="border: thin solid black" type="number" min="1" list="quantity" name="quantity"
-               (change)="updatePrice(saleOrder, $event.target.value)">
-      </td>
-      <td>
-        {{saleOrder.amount}}
-      </td>
+      <th width="100">Quantity</th>
+      <th width="100" (click)="addNewSaleOrder()"><span class="fa fa-plus" style="color: #5cb85c "></span></th>
     </tr>
   </table>
+  <div style="max-height: 300px;overflow: auto;">
+    <table class="table striped-table">
+      <tr *ngFor="let saleOrder of sale.saleOrderList; let i = index;">
+        <td width="50">{{i + 1}}.</td>
+        <td>
+          <input matInput type="text" list="name" name="test"
+                 (change)="updatePriceForName(saleOrder, $event.target.value)">
+        </td>
+        <td width="100">
+          <input matInput style="border: thin solid black" type="number" min="1" list="quantity" name="quantity"
+                 (change)="updatePriceForQuantity(saleOrder, $event.target.value)">
+        </td>
+        <td width="100">
+          {{saleOrder.amount}}
+        </td>
+      </tr>
+    </table>
+  </div>
   <datalist id="name">
     <option *ngFor="let product of productList">{{product.productName}}:{{product.boId}}</option>
   </datalist>
-  <button mat-raised-button style="float: right; bottom: -20px; background: blue; color: aliceblue;margin-bottom: 10px"
-          (click)="save()">Save
-  </button>
-  <button mat-raised-button class="reset-button" type="reset"
-          style="float: right;right: 70px; background: red; color: aliceblue;">Cancel
-  </button>
+
+  <div style="position: absolute;bottom:20px;width: 99%;">
+    <div style="padding:10px;">
+      <div style="display:inline-block; position:absolute;top:0; width:500px;right:100px;text-align: right;">
+        <span style="color: #aaa;">Total: </span> {{sale.total || 0}}
+      </div>
+    </div>
+    <button mat-raised-button style="position:absolute;right: 10px; background: blue; color: aliceblue;"
+            (click)="save()">Save
+    </button>
+  </div>
 </form>
 

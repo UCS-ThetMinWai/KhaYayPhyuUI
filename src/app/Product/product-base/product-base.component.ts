@@ -9,7 +9,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {RawProductNewDialogComponent} from '../../RawProduct/raw-product-new-dialog/raw-product-new-dialog.component';
 import {RawProduct} from '../../domain/raw-product';
 import {RawProductService} from '../../shared/raw-product.service';
-import {faPlusCircle, faSave} from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+import {element} from "protractor";
 
 @Component({
   selector: 'app-product-base',
@@ -19,13 +20,14 @@ import {faPlusCircle, faSave} from '@fortawesome/free-solid-svg-icons';
 export class ProductBaseComponent implements OnInit {
   productList: Product[] = [];
 
-  plusCircleIcon = faPlusCircle;
-
   detailProduct = null;
 
   productDialog: ProductNewDialogComponent;
 
   rawProductDialog: RawProductNewDialogComponent;
+
+  editStatus = {};
+
   constructor(private productService: ProductService, private dialog: MatDialog, private snackBar: MatSnackBar, private rawProductService: RawProductService) {
   }
 
@@ -42,7 +44,8 @@ export class ProductBaseComponent implements OnInit {
   public showDetail(id) {
     this.productService.byId(id).subscribe(product => {
       this.detailProduct = product;
-      console.log(this.detailProduct);
+      const updatedIndex = this.findIndexOfProductFromList(product)
+      this.productList[updatedIndex] = this.detailProduct;
     });
   }
 
@@ -62,17 +65,53 @@ export class ProductBaseComponent implements OnInit {
     });
   }
 
-  public remove(boId) {
-    let index = 0;
-    for (let i = 0; i < this.productList.length; i++) {
-      const purchase = this.productList[i];
-      if (purchase.boId === boId) {
-        index = i;
-        break;
-      }
-    }
+  public remove(product: Product) {
+    this.showWarning(() => {
+      this.productService.delete(product).subscribe(status => {
+        if (status) {
+          Swal.fire({
+            position: 'bottom-end',
+            icon: 'success',
+            title: 'Deleted!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this.removeProductFromList(product);
+        }
+      });
+    })
+  }
+
+  public show(elementName) {
+    this.editStatus[elementName] = true;
+  }
+
+  public hideAndSave(elementName) {
+    this.save();
+    this.editStatus[elementName] = false;
+  }
+
+  public isEnableEdit(elementName) {
+    return !this.editStatus[elementName];
+  }
+
+  public isDisabledEdit(elementName) {
+    return !this.isEnableEdit(elementName);
+  }
+
+  private removeProductFromList(product: Product) {
+    let index = this.findIndexOfProductFromList(product);
     this.productList.splice(index, 1);
     this.detailProduct = null;
+  }
+
+  private findIndexOfProductFromList(product: Product) {
+    for (let i = 0; i < this.productList.length; i++) {
+      const purchase = this.productList[i];
+      if (purchase.boId === product.boId) {
+        return i;
+      }
+    }
   }
 
   public openProductDialog() {
@@ -100,7 +139,6 @@ export class ProductBaseComponent implements OnInit {
 
   public save() {
     this.productService.save(this.detailProduct).subscribe(status => {
-      console.log(status);
       this.openSnackBar('Message', 'success');
     }, error => {
       this.openSnackBar('Message', 'Error');
@@ -109,5 +147,29 @@ export class ProductBaseComponent implements OnInit {
 
   public toDate(timeStamp) {
     return new Date(timeStamp);
+  }
+
+  private showWarning(func) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to delete this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        func();
+      } else {
+        Swal.fire({
+          position: 'bottom-end',
+          icon: 'info',
+          title: 'User cancel operation.',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    })
   }
 }

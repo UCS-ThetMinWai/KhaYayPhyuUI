@@ -12,8 +12,6 @@ export class RawProductNewDialogComponent implements OnInit {
 
   rawProduct: RawProduct;
 
-  saveIcon = faSave;
-
   constructor(private dialogRef: MatDialogRef<RawProduct>) {
     this.rawProduct = new RawProduct();
   }

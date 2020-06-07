@@ -3,7 +3,6 @@ import {ProductBaseComponent} from './Product/product-base/product-base.componen
 import {UserBaseComponent} from './user/user-base/user-base.component';
 import {CustomerBaseComponent} from './customer/customer-base/customer-base.component';
 import {SaleBaseComponent} from './Sale/sale-base/sale-base.component';
-import {Purchase} from './domain/purchase';
 import {PurchaseBaseComponent} from './Purchase/purchase-base/purchase-base.component';
 import {faPlusCircle, faSave, faSearch} from '@fortawesome/free-solid-svg-icons';
 
@@ -36,10 +35,6 @@ export class AppComponent implements OnInit {
 
   @ViewChild(PurchaseBaseComponent)
   public purchaseMain: PurchaseBaseComponent;
-
-  plusCircleIcon = faPlusCircle;
-  findIcon = faSearch;
-  save = faSave;
 
   ngOnInit(): void {
   }

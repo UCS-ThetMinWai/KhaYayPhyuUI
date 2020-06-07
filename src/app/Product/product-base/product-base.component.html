@@ -1,34 +1,47 @@
-<fa-icon style="float: right; width: 35px; height: 100px; font-size: 20px; color: rebeccapurple" [icon]="plusCircleIcon" (click)="openRawProductDialog()"></fa-icon>
+<span style="float: right; width: 35px; height: 100px; font-size: 20px; color: rebeccapurple" class="fa fa-plus" (click)="openRawProductDialog()"></span>
 <mat-list class="left">
   <mat-list-item *ngFor="let product of productList" (click)="showDetail(product.boId)"
-       class="{{detailProduct!= null && detailProduct.id == product.id ? 'active' : ''}}">
+                 class="{{detailProduct!= null && detailProduct.id == product.id ? 'active' : ''}}">
     <span #item>{{product.productName}}</span>
   </mat-list-item>
 </mat-list>
 <div class="right" *ngIf="detailProduct != null" style="hight: 400px;vertical-align: top;">
-  <button mat-raised-button (click)="remove(detailProduct.boId)" color="warn">Delete</button>
   <div>
+    <div class="test">
+      <div class="row" (dblclick)="show('productName')">
+        <div class="col-3 " style="width: 200px">Product Name</div>
+        <div class="col-9 editable" >
+          <span [hidden]="isDisabledEdit('productName')" name="target">: {{detailProduct.productName}} </span>
+          <input type="text" class="target paper" name="product-name"
+                 (keydown.enter)="hideAndSave('productName')"
+                 [(ngModel)]="detailProduct.productName"
+                 [hidden]="isEnableEdit('productName')"/>
+        </div>
+      </div>
+    </div>
+
     <table>
       <tr style="height: 40px">
-        <td style="width: 200px">Product_Name :</td>
-        <td>{{detailProduct.productName}}</td>
+        <td>BoId</td>
+        <td>: {{detailProduct.boId}}</td>
       </tr>
       <tr style="height: 40px">
-        <td>BoId :</td>
-        <td>{{detailProduct.boId}}</td>
+        <td>Packaging </td>
+        <td>: {{detailProduct.peckagingType}}</td>
       </tr>
       <tr style="height: 40px">
-        <td>Packaging :</td>
-        <td>{{detailProduct.peckagingType}}</td>
+        <td>Peckaging Date</td>
+        <td>: {{detailProduct.peckagingDate | date}}</td>
       </tr>
       <tr style="height: 40px">
-        <td>Peckaging_Date :</td>
-        <td>{{detailProduct.peckagingDate | date}}</td>
-      </tr>
-      <tr style="height: 40px">
-        <td>Qty:</td>
-
+        <td>Qty</td>
+        <td>:</td>
       </tr>
     </table>
+    <div style="position:absolute;right:10px;bottom:10px;">
+      <button mat-fab color="warn" (click)="remove(detailProduct)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
   </div>
 </div>

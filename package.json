@@ -22,11 +22,15 @@
     "@angular/platform-browser-dynamic": "~9.1.2",
     "@angular/router": "~9.1.2",
     "@fortawesome/angular-fontawesome": "^0.6.1",
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "angular-font-awesome": "^3.1.2",
     "bootstrap": "^4.4.1",
+    "fontawesome": "^5.6.3",
+    "jquery": "^3.5.1",
     "rxjs": "~6.5.4",
+    "sweetalert2": "^9.14.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
@@ -50,5 +54,17 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.8.3"
-  }
+  },
+  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.2.",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UCS-ThetMinWai/KhaYayPhyuUI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UCS-ThetMinWai/KhaYayPhyuUI/issues"
+  },
+  "homepage": "https://github.com/UCS-ThetMinWai/KhaYayPhyuUI#readme"
 }

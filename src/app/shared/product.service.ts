@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Product} from '../domain/product';
-import {Observable} from 'rxjs';
+import {observable, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {BaseService} from "./BaseService";
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class ProductService {
   }
 
   public save(product: Product) {
-    product.rawProduct = product.rawProduct;
-    return this.httpClient.post('http://localhost:8080/khayayphyu-application/product/', product);
+    console.log(product)
+    return this.httpClient.post(this.getBaseURL(), product);
   }
 
   public searchWithProduct() {
@@ -38,12 +39,26 @@ export class ProductService {
   }
 
   public byId(id) {
-    return this.httpClient.get<Product[]>('http://localhost:8080/khayayphyu-application/product/' + id).pipe(map(ys => {
+    return this.httpClient.get<Product[]>(this.getBaseURL() + id).pipe(map(ys => {
       if (ys.length <= 0) {
         return null;
       }
       return Product.create(ys);
     }));
+  }
+
+  public delete(product) {
+    const observable = new Observable(obs => {
+      this.httpClient.delete(this.getBaseURL() + product.boId).subscribe(result => {
+        obs.next(true);
+      })
+    });
+
+    return observable;
+  }
+
+  private getBaseURL() {
+    return BaseService.BASE_URL + "product/"
   }
 
 }

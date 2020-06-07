@@ -79,7 +79,6 @@ import {MatTableModule} from '@angular/material/table';
     MatToolbarModule,
     MatTabsModule,
     MatInputModule,
-    FontAwesomeModule,
     MatFormFieldModule,
     MatListModule,
     FormsModule,

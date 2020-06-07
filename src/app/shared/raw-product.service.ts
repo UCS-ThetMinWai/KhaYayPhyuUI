@@ -13,4 +13,5 @@ export class RawProductService {
   public save(rawProduct: RawProduct) {
     return this.httpClient.post('http://localhost:8080/khayayphyu-application/rawProduct/', rawProduct);
   }
+
 }

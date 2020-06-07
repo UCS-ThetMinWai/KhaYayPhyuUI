@@ -11,7 +11,7 @@ export class Sale {
   public saleOrderList: SaleOrder[];
   public customer: Customer;
 
-  public static  createSaleOrder(json: any) {
+  public static createSaleOrder(json: any) {
     const saleOrder = new SaleOrder();
     saleOrder.id = json.id;
     saleOrder.boId = json.boId;
@@ -55,5 +55,10 @@ export class Sale {
 
   public totalBalance() {
     return this.total - this.payAmount;
+  }
+
+  public updateTotal() {
+    this.total = 0;
+    this.saleOrderList.forEach(saleOrder => this.total += saleOrder.product.currentPrice.saleAmount * saleOrder.quantity);
   }
 }

@@ -56,4 +56,6 @@ export class Product {
     this.rawProduct = new RawProduct();
     this.currentPrice = new Price();
   }
+
+  public
 }

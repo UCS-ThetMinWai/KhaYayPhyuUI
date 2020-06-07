@@ -27,6 +27,7 @@ export class SaleNewDialogComponent implements OnInit {
     this.initializeCustomer();
     this.sale.saleOrderList.push(new SaleOrder());
     this.sale.customer = new Customer();
+    this.sale.saleDate = new Date();
     this.productService.search().subscribe(productList => {
       this.productList = productList;
     });
@@ -37,12 +38,6 @@ export class SaleNewDialogComponent implements OnInit {
   }
 
   public save() {
-    this.sale.saleOrderList.forEach(saleOrder => {
-      console.log("sale order ", saleOrder);
-      const boId = saleOrder['name'].split(':')[1];
-      saleOrder.product = this.findProductByBoId(boId);
-    });
-    console.log("Sale is:", this.sale);
     this.dialogRef.close(this.sale);
   }
 
@@ -91,19 +86,29 @@ export class SaleNewDialogComponent implements OnInit {
   }
 
   closeDialog() {
-    console.log(this.sale);
     this.dialogRef.close(null);
   }
 
-  updatePrice(saleOrder: SaleOrder, productStr: string) {
+  updatePriceForName(saleOrder: SaleOrder, productStr: string) {
     const productId = productStr.split(':')[1];
     const selectedProduct = this.findProductByBoId(productId);
     if (selectedProduct.currentPrice == null) {
       return;
     }
     saleOrder.quantity = saleOrder.quantity || 0;
-    saleOrder.amount = selectedProduct.currentPrice.saleAmount * saleOrder.quantity;
+    saleOrder.updateAmount();
+    saleOrder.product = selectedProduct;
+    this.sale.updateTotal();
+  }
 
+  updatePriceForQuantity(saleOrder: SaleOrder, quantity: number) {
+    if (quantity <= 0 || saleOrder.product == null) {
+      saleOrder.amount = 0;
+      return;
+    }
+    saleOrder.quantity = quantity || 0;
+    saleOrder.updateAmount();
+    this.sale.updateTotal();
   }
 
 }

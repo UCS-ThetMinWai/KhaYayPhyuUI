@@ -10,7 +10,7 @@ export class SaleOrder {
   public amount: number;
   public product: Product;
 
-  public static  createSaleOrder(json: any) {
+  public static createSaleOrder(json: any) {
     const saleOrder = new SaleOrder();
     saleOrder.id = json.id;
     saleOrder.boId = json.boId;
@@ -33,5 +33,9 @@ export class SaleOrder {
     product.peckagingType = productJson.peckagingType;
     product.rawProduct = Product.createRawProduct(productJson.rawProduct);
     return product;
+  }
+
+  public updateAmount() {
+    this.amount = this.quantity * (this.product ? this.product.currentPrice.saleAmount : 0);
   }
 }
