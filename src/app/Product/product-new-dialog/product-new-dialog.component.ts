@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {Product} from '../../domain/product';
+import {Customer} from '../../domain/customer';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {RawProduct} from '../../domain/raw-product';
 import {HttpClient} from '@angular/common/http';
 import {RawProductNewDialogComponent} from '../../RawProduct/raw-product-new-dialog/raw-product-new-dialog.component';
 import {RawProductService} from '../../shared/raw-product.service';
+import {Product} from '../../domain/product';
 
 @Component({
   selector: 'app-product-new-dialog',

@@ -1,20 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {Sale} from '../../domain/sale';
-import {Product} from '../../domain/product';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HttpClient} from '@angular/common/http';
-import {Customer} from '../../domain/customer';
 import {SaleOrder} from '../../domain/sale-order';
 import {ProductService} from '../../shared/product.service';
 import {CustomerService} from '../../shared/customer.service';
+import {Product} from '../../domain/product';
+import {Customer} from '../../domain/customer';
 
 @Component({
   selector: 'app-sale-new-dialog',
   templateUrl: './sale-new-dialog.component.html',
   styleUrls: ['./sale-new-dialog.component.css']
 })
-export class SaleNewDialogComponent implements OnInit {
+export class SaleNewDialogComponent implements OnInit, AfterViewInit {
   sale: Sale;
   saleOrderList: SaleOrder[];
   customerList: Customer[];
@@ -23,6 +23,10 @@ export class SaleNewDialogComponent implements OnInit {
   displayColumns: string[] = ['name'];
 
   constructor(private dialogRef: MatDialogRef<Sale>, private snackBar: MatSnackBar, private httpClient: HttpClient, private productService: ProductService, private customerService: CustomerService) {
+
+  }
+
+  ngAfterViewInit(): void {
     this.sale = new Sale();
     this.initializeCustomer();
     this.sale.saleOrderList.push(new SaleOrder());

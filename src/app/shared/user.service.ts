@@ -3,8 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {User} from '../domain/user';
-import {Product} from '../domain/product';
 import {Customer} from '../domain/customer';
+import {BaseService} from './BaseService';
+import {userError} from '@angular/compiler-cli/src/transformers/util';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,11 @@ export class UserService {
   }
 
   public search() {
-    return this.httpClient.get('http://localhost:8080/khayayphyu-application/user/');
+    return this.httpClient.get(this.getBaseURL());
   }
 
   public searchWithUser() {
-    return this.httpClient.get<User[]>('http://localhost:8080/khayayphyu-application/user/').pipe(map(xs => {
+    return this.httpClient.get<User[]>(this.getBaseURL() + '/').pipe(map(xs => {
       const userList = [];
       for (const x of xs) {
         userList.push(User.create(x));
@@ -28,13 +29,23 @@ export class UserService {
     }));
   }
 
+  public delete(user) {
+    const observable = new Observable(obs => {
+      this.httpClient.delete(this.getBaseURL() + '/' + user.boId).subscribe(result => {
+        obs.next(true);
+      });
+    });
+
+    return observable;
+  }
+
   public save(user: User) {
-    return this.httpClient.post('http://localhost:8080/khayayphyu-application/user/', user);
+    return this.httpClient.post(this.getBaseURL() + '/', user);
   }
 
   public byId(id) {
-    return this.httpClient.get<User[]>('http://localhost:8080/khayayphyu-application/user/' + id).pipe(map(ys => {
-      if (ys.length <= 0) {
+    return this.httpClient.get<User>(this.getBaseURL() + '/' + id).pipe(map(ys => {
+      if (ys == null) {
         return null;
       }
       return User.create(ys);
@@ -42,10 +53,14 @@ export class UserService {
   }
 
   public byName(name) {
-    return this.httpClient.get<User[]>('http://localhost:8080/khayayphyu-application/user/search/' + name).pipe(map(ys => {
+    return this.httpClient.get<User[]>(this.getBaseURL(), {params: {name: name}}).pipe(map(ys => {
       const userList = [];
       ys.forEach(x => userList.push(User.create(x)));
       return userList;
     }));
+  }
+
+  private getBaseURL() {
+    return BaseService.BASE_URL + 'user';
   }
 }

@@ -39,7 +39,7 @@ export class Product {
     return price;
   }
 
-  public static create(productJson: any) {
+  public static createProduct(productJson: any) {
     const product = new Product();
     product.id = productJson.id;
     product.boId = productJson.boId;
@@ -52,10 +52,9 @@ export class Product {
     return product;
   }
 
-  public Product() {
+  public constructor() {
     this.rawProduct = new RawProduct();
     this.currentPrice = new Price();
   }
 
-  public
 }

@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../../shared/product.service';
-import {Product} from '../../domain/product';
+import {Customer} from '../../domain/customer';
 import {ProductNewDialogComponent} from '../product-new-dialog/product-new-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {CustomerNewDialogComponent} from '../../customer/customer-new-dialog/customer-new-dialog.component';
-import {Customer} from '../../domain/customer';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {RawProductNewDialogComponent} from '../../RawProduct/raw-product-new-dialog/raw-product-new-dialog.component';
 import {RawProduct} from '../../domain/raw-product';
 import {RawProductService} from '../../shared/raw-product.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {element} from "protractor";
+import {Product} from '../../domain/product';
 
 @Component({
   selector: 'app-product-base',
@@ -44,7 +44,7 @@ export class ProductBaseComponent implements OnInit {
   public showDetail(id) {
     this.productService.byId(id).subscribe(product => {
       this.detailProduct = product;
-      const updatedIndex = this.findIndexOfProductFromList(product)
+      const updatedIndex = this.findIndexOfProductFromList(product);
       this.productList[updatedIndex] = this.detailProduct;
     });
   }
@@ -75,11 +75,11 @@ export class ProductBaseComponent implements OnInit {
             title: 'Deleted!',
             showConfirmButton: false,
             timer: 1500
-          })
+          });
           this.removeProductFromList(product);
         }
       });
-    })
+    });
   }
 
   public show(elementName) {
@@ -107,8 +107,8 @@ export class ProductBaseComponent implements OnInit {
 
   private findIndexOfProductFromList(product: Product) {
     for (let i = 0; i < this.productList.length; i++) {
-      const purchase = this.productList[i];
-      if (purchase.boId === product.boId) {
+      const deleteProduct = this.productList[i];
+      if (deleteProduct.boId === product.boId) {
         return i;
       }
     }
@@ -168,8 +168,8 @@ export class ProductBaseComponent implements OnInit {
           title: 'User cancel operation.',
           showConfirmButton: false,
           timer: 1500
-        })
+        });
       }
-    })
+    });
   }
 }

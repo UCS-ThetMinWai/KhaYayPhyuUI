@@ -1,5 +1,6 @@
 import {SaleOrder} from './sale-order';
 import {Customer} from './customer';
+import {Product} from './product';
 
 export class Sale {
   public id: number;
@@ -19,7 +20,7 @@ export class Sale {
     saleOrder.peckagingType = json.peckagingType;
     saleOrder.quantity = json.quantity;
     saleOrder.weight = json.weight;
-    saleOrder.product = SaleOrder.createProduct(json.product);
+    saleOrder.product = Product.createProduct(json.product);
     return saleOrder;
   }
 
