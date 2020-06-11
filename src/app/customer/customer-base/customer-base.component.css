@@ -5,13 +5,13 @@
 
 mat-form-field {
   height: 100px;
-  width:200px;
+  width: 200px;
 }
 
 .right {
   width: calc(100% - 400px);
   display: inline-block;
-  padding:10px;
+  padding: 10px;
 }
 
 mat-list-item {
@@ -22,27 +22,65 @@ mat-list-item:last-child {
   border-bottom: 0 solid #ccc;
 }
 
-mat-list-item:hover{
+mat-list-item:hover {
   cursor: pointer;
 }
 
 .content {
-  padding:10px;
+  padding: 10px;
   border: thin solid dodgerblue;
-  margin:5px;
+  margin: 5px;
   border-radius: 9px;
 }
 
 .active {
-  background-color: dodgerblue;
+  background-color: #050549;
+  color: whitesmoke;
+
 }
+
 span.active {
-  color:green;
+  color: green;
   background-color: lightgreen;
 }
 
-.content:hover{
-  background-color: lightgreen;
+.content:hover, mat-list-item:hover {
   cursor: pointer;
+  box-shadow: 0 0 5px #050549;
+  border-radius: 5px;
+  border: thin solid #050549;
+}
+
+.paper {
+  border: none;
+  box-shadow: 0 0 5px dodgerblue;
+  width: 400px;
+}
+
+.hov:hover {
+  font-size:1.5em;
+  color: #02022f;
+  cursor: pointer;
+  position:absolute;
+}
+.test:hover {
+  position:relative;
+  width: 100%;
+}
+
+.test:hover [name=target], .target {
+  position:absolute;
+  padding:5px;
+  display: inline-block;
+  width: 400px;
+  border-radius: 3px;
+}
+
+.test:hover [name=target] {
+  box-shadow: 0 0 3px dodgerblue;
+}
+
+.target {
+  box-shadow: 0 0 3px darkblue;
 }
 

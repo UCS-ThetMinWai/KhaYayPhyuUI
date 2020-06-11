@@ -1,4 +1,3 @@
-<span style="float: right; width: 35px; height: 100px; font-size: 20px; color: rebeccapurple" class="fa fa-plus" (click)="openRawProductDialog()"></span>
 <mat-list class="left">
   <mat-list-item *ngFor="let product of productList" (click)="showDetail(product.boId)"
                  class="{{detailProduct!= null && detailProduct.id == product.id ? 'active' : ''}}">
@@ -9,8 +8,8 @@
   <div>
     <div class="test">
       <div class="row" (dblclick)="show('productName')">
-        <div class="col-3 " style="width: 200px">Product Name</div>
-        <div class="col-9 editable" >
+        <div class="col-3 " style="width: 200px; height: 50px">Product Name</div>
+        <div class="col-9 editable">
           <span [hidden]="isDisabledEdit('productName')" name="target">: {{detailProduct.productName}} </span>
           <input type="text" class="target paper" name="product-name"
                  (keydown.enter)="hideAndSave('productName')"
@@ -19,28 +18,54 @@
         </div>
       </div>
     </div>
-
-    <table>
-      <tr style="height: 40px">
-        <td>BoId</td>
-        <td>: {{detailProduct.boId}}</td>
-      </tr>
-      <tr style="height: 40px">
-        <td>Packaging </td>
-        <td>: {{detailProduct.peckagingType}}</td>
-      </tr>
-      <tr style="height: 40px">
-        <td>Peckaging Date</td>
-        <td>: {{detailProduct.peckagingDate | date}}</td>
-      </tr>
-      <tr style="height: 40px">
-        <td>Qty</td>
-        <td>:</td>
-      </tr>
-    </table>
+    <div class="row">
+      <div class="col-3 " style="width: 200px; height: 50px">BoId</div>
+      <div class="col-9 editable">
+        : {{detailProduct.boId}}
+      </div>
+    </div>
+    <div class="test">
+      <div class="row" (dblclick)="show('peckagingType')">
+        <div class="col-3 " style="width: 200px; height: 50px">Pecking Type</div>
+        <div class="col-9 editable">
+          <span [hidden]="isDisabledEdit('peckagingType')" name="target">: {{detailProduct.peckagingType}} </span>
+          <mat-select [(ngModel)]="detailProduct.peckagingType" name="packingType"
+                      (selectionChange)="hideAndSave('peckagingType')"
+                      [hidden]="isEnableEdit('peckagingType')">
+            <mat-option value="PACK">PACK</mat-option>
+            <mat-option value="CARD">CARD</mat-option>
+          </mat-select>
+        </div>
+      </div>
+    </div>
+    <div class="test">
+      <div class="row" (dblclick)="show('currentPrice')">
+        <div class="col-3 " style="width: 200px; height: 50px">Current Price</div>
+        <div class="col-9 editable">
+          <span [hidden]="isDisabledEdit('currentPrice')" name="target">: {{detailProduct.currentPrice.saleAmount}} </span>
+          <input type="text" class="target paper" name="product-current-price"
+                 (keydown.enter)="hideAndSave('currentPrice')"
+                 [(ngModel)]="detailProduct.currentPrice.saleAmount"
+                 [hidden]="isEnableEdit('currentPrice')"/>
+        </div>
+      </div>
+    </div>
+    <div class="test">
+      <div class="row" (dblclick)="show('peckagingDate')">
+        <div class="col-3 " style="width: 200px; height: 50px">Pecking Date</div>
+        <div class="col-9 editable">
+          <span [hidden]="isDisabledEdit('peckagingDate')"
+                name="target">: {{detailProduct.peckagingDate | date}} </span>
+          <input type="date" class="target paper" name="product-peckin-date"
+                 (keydown.enter)="hideAndSave('peckagingDate')"
+                 [(ngModel)]="detailProduct.peckagingDate"
+                 [hidden]="isEnableEdit('peckagingDate')"/>
+        </div>
+      </div>
+    </div>
     <div style="position:absolute;right:10px;bottom:10px;">
       <button mat-fab color="warn" (click)="remove(detailProduct)">
-        <mat-icon>delete</mat-icon>
+        <span class="fa fa-trash-alt"></span>
       </button>
     </div>
   </div>

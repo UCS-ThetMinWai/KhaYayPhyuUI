@@ -1,25 +1,34 @@
 <form>
-  <span class="cancel-button"(click)="closeDialog()">x</span>
-  <mat-form-field style="width: 600px">
-    <input matInput placeholder="Name" name="name" required="Invalid name!" [(ngModel)]="customer.name"/>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Age" name="age"
-           [(ngModel)]="customer.age"/>
-  </mat-form-field>
-  <mat-form-field><input matInput placeholder="Phone Number"
-                         name="phoneNumber"
-                         [(ngModel)]="customer.phoneNumber"/></mat-form-field>
+  <div class="test">
+    <div class="row">
+      <div class="col-3 ">Customer Name</div>
+      <div class="col-9 editable">
+        <input type="text" class="target paper" name="customer-name"
+               [(ngModel)]="customer.name"/>
+      </div>
+    </div>
+  </div>
+  <div class="test">
+    <div class="row">
+      <div class="col-3 "> Phone Number</div>
+      <div class="col-9 editable">
+        <input type="text" class="target paper" name="customer-phone-number"
+               [(ngModel)]="customer.phoneNumber"/>
+      </div>
+    </div>
+  </div>
 
-  <mat-form-field><textarea row="20" cols="5" placeholder="Address" matInput
-                            name="address"
-                            [(ngModel)]="customer.address"></textarea></mat-form-field>
-
-  <button mat-raised-button
-          style="float: right; bottom: -20px; background: blue; color: aliceblue;margin-bottom: 10px"
-          (click)="save()">Save
-  </button>
-  <button mat-raised-button class="reset-button" type="reset"
-          style="float: right;right: 70px; background: red; color: aliceblue;">Cancel
-  </button>
+  <div class="test">
+    <div class="row">
+      <div class="col-3 ">Address</div>
+      <div class="col-9 editable">
+        <textarea rows="2" cols="20" class="target paper" name="customer-address"
+                  [(ngModel)]="customer.address"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <button mat-raised-button color="warn" class="reset-button" (click)="closeDialog()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+  </div>
 </form>

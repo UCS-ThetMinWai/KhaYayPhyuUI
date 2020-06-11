@@ -1,12 +1,39 @@
-<mat-toolbar color="primary" >
-  <div class="menu-button" (click)="updateStatus('product')" class="{{selected == 'product' ? 'active' : ''}}">Product</div>
-  <div class="menu-button" (click)="updateStatus('user')" class="{{selected == 'user' ? 'active' : ''}}">User</div>
-  <div class="menu-button" (click)="updateStatus('customer')" class="{{selected == 'customer' ? 'active' : ''}}">Customer</div>
-  <div class="menu-button" (click)="updateStatus('sale')" class="{{selected == 'sale' ? 'active' : ''}}">Sale</div>
-  <div class="menu-button" (click)="updateStatus('purchase')" class="{{selected == 'purchase' ? 'active' : ''}}">Purchase</div>
-  <input matInput type="search" placeholder="Search" name="searchText" [(ngModel)]="searchText" class="search" (keyup.enter)="search()"/>
-  <span class="fa fa-plus" style="float: right; position: absolute;right: 240px" (click)="openDialog()" ></span>
-  <span (click)="openDialog()" class="fa fa-search"></span>
+<mat-toolbar color="primary">
+  <div class="menu-button" (click)="updateStatus('product')" class="{{selected == 'product' ? 'active' : ''}}">
+    <div>
+      <span class="fa fa-box-open"></span>
+      Product
+    </div>
+  </div>
+  <div class="menu-button" (click)="updateStatus('user')" class="{{selected == 'user' ? 'active' : ''}}">
+    <div>
+      <span class="fa fa-user-tie"></span>
+      User
+    </div>
+  </div>
+  <div class="menu-button" (click)="updateStatus('customer')" class="{{selected == 'customer' ? 'active' : ''}}">
+    <div>
+      <span class="fa fa-users"></span>
+      Customer
+    </div>
+  </div>
+  <div class="menu-button" (click)="updateStatus('sale')" class="{{selected == 'sale' ? 'active' : ''}}">
+    <div>
+      <span class="fa fa-cart-plus"></span>
+      Sale
+    </div>
+  </div>
+  <div class="menu-button" (click)="updateStatus('purchase')" class="{{selected == 'purchase' ? 'active' : ''}}">
+    <div>
+      <span class="fa fa-cart-arrow-down"></span>
+      Purchase
+    </div>
+  </div>
+  <div class="search-div">
+    <input matInput type="search" name="searchText" [(ngModel)]="searchText" class="search" (keyup.enter)="search()"/>
+    <span (click)="openDialog()" style="right:5px;top:8px; position: absolute" class="fa fa-search"></span>
+  </div>
+    <span  class="add-div fa fa-plus" (click)="openDialog()"></span>
 </mat-toolbar>
 <!-- mat-tab-group>
   <mat-tab label="Product">
@@ -15,7 +42,7 @@
   <mat-tab label="User">
     <app-user-base></app-user-base>
   </mat-tab>
-  <mat-tab label="Customer">
+  <mat-tab label="Product">
     <app-customer-base></app-customer-base>
   </mat-tab>
   <mat-tab label="Purchase">
@@ -26,8 +53,8 @@
   </mat-tab>
 </mat-tab-group -->
 <app-product-base [hidden]="selected!='product'" name="productBase"></app-product-base>
-<app-user-base [hidden]="selected!='user'" ></app-user-base>
-<app-customer-base [hidden]="selected!='customer'" ></app-customer-base>
-<app-sale-base [hidden]="selected!='sale'" ></app-sale-base>
-<app-purchase-base [hidden]="selected!='purchase'" ></app-purchase-base>
+<app-user-base [hidden]="selected!='user'"></app-user-base>
+<app-customer-base [hidden]="selected!='customer'"></app-customer-base>
+<app-sale-base [hidden]="selected!='sale'"></app-sale-base>
+<app-purchase-base [hidden]="selected!='purchase'"></app-purchase-base>
 

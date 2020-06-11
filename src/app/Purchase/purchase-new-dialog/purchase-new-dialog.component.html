@@ -1,5 +1,5 @@
 <form>
-  <span class="cancel-button"><button mat-button mat-dialog-close class="content" (click)="closeDialog()" style="width: 3px;" color="white">x</button></span>
+  <span style="color: red" class="cancel-button fa fa-times" (click)="closeDialog()"></span>
   <mat-form-field style="width: 600px">
     <input matInput type="date" placeholder="Date" name="date" required="Invalid name!" [(ngModel)]="purchase.purchaseDate"/>
   </mat-form-field>

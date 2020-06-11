@@ -1,21 +1,54 @@
 :host {
   display: inline-block;
-  position:relative;
-}
-.cancel-button {
-  position:absolute;
-  right:-10px;
-  top:-20px;
-}
-
-.reset-button {
-  position: absolute;
-  bottom: -10px;
+  position: relative;
+  width: 650px;
 }
 
 mat-form-field {
-  display: block;
-  margin-right: 12px;
+  display: inline-block;
 }
 
+
+.test {
+  width: 90%;
+  margin: 10px;
+}
+
+.test:hover {
+  position: relative;
+}
+
+.test:hover [name=target], .target {
+  padding: 5px;
+  display: inline-block;
+  width: 400px;
+  border-radius: 3px;
+}
+
+.test:hover [name=target] {
+  box-shadow: 0 0 3px dodgerblue;
+}
+
+.target {
+  box-shadow: 0 0 3px darkblue;
+}
+
+.content:hover {
+  background-color: lightgreen;
+  cursor: pointer;
+}
+
+.paper {
+  border: none;
+  box-shadow: 0 0 5px dodgerblue;
+}
+
+.footer {
+  width: 90%;
+  text-align: right;
+}
+
+.footer button {
+  margin:10px 5px;
+}
 

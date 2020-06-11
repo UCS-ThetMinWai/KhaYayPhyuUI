@@ -1,22 +1,54 @@
 <mat-list class="left">
   <mat-list-item *ngFor="let customer of customerList" (click)="showDetail(customer.boId)"
-                 class="{{detailCustomer != null && detailCustomer.id == customer.id ? ' active' : ''}}">
+                 class="{{detailCustomer!= null && detailCustomer.id == customer.id ? 'active' : ''}}">
     <span #item>{{customer.name}}</span>
   </mat-list-item>
 </mat-list>
 <div class="right" *ngIf="detailCustomer != null" style="hight: 400px;vertical-align: top;">
-  here
-  <table mat-table [dataSource]="customerList">
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">{{element.name}}</td>
-    </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
-  </table>
   <div>
-    <button mat-raised-button  (click)="save()" color="primary">Save</button>
-    <button mat-raised-button (click)="remove(detailCustomer.boId)" color="warn">Delete</button>
+    <div class="test">
+      <div class="row" (dblclick)="show('name')">
+        <div class="col-3 " style="width: 200px; height: 50px">Customer Name</div>
+        <div class="col-9 editable">
+          <span [hidden]="isDisabledEdit('name')" name="target">: {{detailCustomer.name}} </span>
+          <input type="text" class="target paper" name="customer-name"
+                 (keydown.enter)="hideAndSave('name')"
+                 [(ngModel)]="detailCustomer.name"
+                 [hidden]="isEnableEdit('name')"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="test">
+      <div class="row" (dblclick)="show('phoneNumber')">
+        <div class="col-3 " style="width: 200px; height: 50px">Phone Number</div>
+        <div class="col-9 editable">
+          <span [hidden]="isDisabledEdit('phoneNumber')" name="target">: {{detailCustomer.phoneNumber}} </span>
+          <input type="text" class="target paper" name="customer-phone-number"
+                 (keydown.enter)="hideAndSave('phoneNumber')"
+                 [(ngModel)]="detailCustomer.phoneNumber"
+                 [hidden]="isEnableEdit('phoneNumber')"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="test">
+      <div class="row" (dblclick)="show('address')">
+        <div class="col-3 " style="width: 200px; height: 50px">Address</div>
+        <div class="col-9 editable">
+          <span [hidden]="isDisabledEdit('address')" name="target">: {{detailCustomer.address}} </span>
+          <input type="text" class="target paper" name="customer-address"
+                 (keydown.enter)="hideAndSave('address')"
+                 [(ngModel)]="detailCustomer.address"
+                 [hidden]="isEnableEdit('address')"/>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:absolute;right:10px;bottom:10px;">
+      <button mat-fab color="warn" (click)="remove(detailCustomer)">
+        <span class="fa fa-trash-alt"></span>
+      </button>
+    </div>
   </div>
 </div>
-

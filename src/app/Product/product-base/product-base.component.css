@@ -35,6 +35,8 @@ mat-list-item:hover {
 
 .active {
   background-color: dodgerblue;
+  color: #5cb85c;
+
 }
 
 span.active {
@@ -42,9 +44,11 @@ span.active {
   background-color: lightgreen;
 }
 
-.content:hover {
-  background-color: lightgreen;
+.content:hover, mat-list-item:hover {
   cursor: pointer;
+  box-shadow: 0 0 5px blue;
+  border-radius: 5px;
+  border: thin solid blue;
 }
 
 .paper {
@@ -55,7 +59,7 @@ span.active {
 
 .hov:hover {
   font-size:1.5em;
-  color:green;
+  color: #02022f;
   cursor: pointer;
   position:absolute;
 }

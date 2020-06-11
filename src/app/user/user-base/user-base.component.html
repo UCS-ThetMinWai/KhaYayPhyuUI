@@ -7,26 +7,57 @@
 </mat-list>
 <div class="right" *ngIf="detailUser != null" style="hight: 400px;vertical-align: top;" >
   <div>
-    <tr>
-      <td>User_Name   :</td>
-      <td>{{detailUser.name}}</td>
-    </tr>
-    <tr>
-      <td>BoId   :</td>
-      <td>{{detailUser.boId}}</td>
-    </tr>
-    <tr>
-      <td>Age   :</td>
-      <td>{{detailUser.age}}</td>
-    </tr>
-    <tr>
-      <td>Address  :</td>
-      <td>{{detailUser.address}}</td>
-    </tr>
-    <tr>
-      <td>Role  :</td>
-      <td>{{detailUser.role}}</td>
-    </tr>
+    <div class="test">
+      <div class="row" (dblclick)="show('name')">
+        <div class="col-3 " style="width: 200px; height: 50px">User Name</div>
+        <div class="col-9 editable">
+          <span [hidden]="isDisabledEdit('name')" name="target">: {{detailUser.name}} </span>
+          <input type="text" class="target paper" name="user-name"
+                 (keydown.enter)="hideAndSave('name')"
+                 [(ngModel)]="detailUser.name"
+                 [hidden]="isEnableEdit('name')"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3 " style="width: 200px; height: 50px">BoIdPecking Date</div>
+      <div class="col-9 editable">
+        : {{detailUser.boId}}
+      </div>
+    </div>
+    <div class="test">
+      <div class="row" (dblclick)="show('address')">
+        <div class="col-3 " style="width: 200px; height: 50px">Address</div>
+        <div class="col-9 editable">
+          <span [hidden]="isDisabledEdit('name')" name="target">: {{detailUser.address}} </span>
+          <input type="text" class="target paper" name="user-address"
+                 (keydown.enter)="hideAndSave('address')"
+                 [(ngModel)]="detailUser.address"
+                 [hidden]="isEnableEdit('address')"/>
+        </div>
+      </div>
+    </div>
+    <div class="test">
+      <div class="row" (dblclick)="show('role')">
+        <div class="col-3 " style="width: 200px; height: 50px">User Role</div>
+        <div class="col-9 editable">
+          <span [hidden]="isDisabledEdit('role')" name="target">: {{detailUser.role}} </span>
+          <mat-select [(ngModel)]="detailUser.role" name="role"
+                      (selectionChange)="hideAndSave('role')"
+                      [hidden]="isEnableEdit('role')">
+            <mat-option value="EMPLOYEE">EMPLOYEE</mat-option>
+            <mat-option value="ORGANIZER">ORGANIZER</mat-option>
+            <mat-option value="ADMINISTRATOR">ADMINISTRATOR</mat-option>
+            <mat-option value="INSTRUCTOR">INSTRUCTOR</mat-option>
+          </mat-select>
+        </div>
+      </div>
+    </div>
+  <div style="position:absolute;right:10px;bottom:10px;">
+    <button mat-fab color="warn" (click)="remove(detailUser)">
+      <span class="fa fa-trash-alt"></span>
+    </button>
   </div>
 </div>
 

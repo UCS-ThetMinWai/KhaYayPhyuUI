@@ -1,9 +1,9 @@
 <form style="width: 800px;height: calc(100vh - 100px);">
-  <span class="cancel-button fa fa-times-circle"  style="color:tomato;padding:3px;" (click)="closeDialog()" ></span>
+  <span style="color: red" class="cancel-button fa fa-times"  style="color:tomato;padding:3px;" (click)="closeDialog()" ></span>
   <span style="position:absolute;right: 10px;">{{sale.saleDate|date}}</span>
   <mat-form-field style="width:80%;">
     <mat-label>Customer Name</mat-label>
-    <mat-select name="raw-product-name">
+    <mat-select name="customer-name">
       <mat-option *ngFor="let customer of customerList" (click)="updateCustomer(customer)"
                   [value]="customer.name">{{customer.name}}</mat-option>
     </mat-select>
