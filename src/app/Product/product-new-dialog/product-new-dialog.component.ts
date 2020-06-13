@@ -1,12 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {faPlusCircle} from '@fortawesome/free-solid-svg-icons';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {Customer} from '../../domain/customer';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {RawProduct} from '../../domain/raw-product';
 import {HttpClient} from '@angular/common/http';
-import {RawProductNewDialogComponent} from '../../RawProduct/raw-product-new-dialog/raw-product-new-dialog.component';
-import {RawProductService} from '../../shared/raw-product.service';
 import {Product} from '../../domain/product';
 
 @Component({
@@ -18,31 +13,11 @@ import {Product} from '../../domain/product';
 export class ProductNewDialogComponent implements OnInit {
   product: Product;
 
-  rawProductList: RawProduct[];
-
-  rawProductDialog: RawProductNewDialogComponent;
-
-  constructor(private dialogRef: MatDialogRef<Product>, private dialog: MatDialog, private snackBar: MatSnackBar, private httpClient: HttpClient, private rawProductService: RawProductService) {
+  constructor(private dialogRef: MatDialogRef<Product>, private dialog: MatDialog, private snackBar: MatSnackBar, private httpClient: HttpClient) {
     this.product = new Product();
-    this.product.rawProduct = new RawProduct();
-    this.initializeRawProduct();
   }
 
   ngOnInit(): void {
-  }
-
-  private initializeRawProduct() {
-    this.httpClient.get('http://localhost:8080/khayayphyu-application/rawProduct/list').subscribe((jsons: any[]) => {
-      this.rawProductList = [];
-      jsons.forEach(rProduct => {
-        this.rawProductList.push(Product.createRawProduct(rProduct));
-      });
-    });
-  }
-
-  public updateRaw(raw: RawProduct) {
-    this.product.rawProduct = raw;
-    console.log(this.product.rawProduct);
   }
 
   openSnackBar(message: string, action: string) {

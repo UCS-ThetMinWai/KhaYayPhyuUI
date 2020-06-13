@@ -37,9 +37,15 @@ mat-toolbar {
 
 }
 
+.search-result {
+  position: relative;
+  right: 405px;
+  top: 22px;
+}
+
 .search-div {
   float: right;
-  width: 300px;
+  width: 350px;
   right: 40px;
   top: 10px;
   color: black;
@@ -51,12 +57,12 @@ mat-toolbar {
 .search {
   background-color: whitesmoke;
   border-radius: 20px;
-  width: 100%;
+  width: calc(100% - 60px);
   padding-left: 15px;
 }
 
 .search-div:hover {
-  width: 350px;
+  width: 400px;
   color: #aaaaaa;
   transition: width 1s;
 }

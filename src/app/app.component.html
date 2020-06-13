@@ -29,11 +29,14 @@
       Purchase
     </div>
   </div>
+
   <div class="search-div">
+    <span style="display: inline-block; width: 60px">{{searchResultText}}</span>
     <input matInput type="search" name="searchText" [(ngModel)]="searchText" class="search" (keyup.enter)="search()"/>
+
     <span (click)="openDialog()" style="right:5px;top:8px; position: absolute" class="fa fa-search"></span>
   </div>
-    <span  class="add-div fa fa-plus" (click)="openDialog()"></span>
+  <span class="add-div fa fa-plus" (click)="openDialog()"></span>
 </mat-toolbar>
 <!-- mat-tab-group>
   <mat-tab label="Product">

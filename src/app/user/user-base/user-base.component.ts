@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {UserService} from '../../shared/user.service';
 import {ProductNewDialogComponent} from '../../Product/product-new-dialog/product-new-dialog.component';
 import {Customer} from '../../domain/customer';
@@ -14,6 +14,10 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./user-base.component.css']
 })
 export class UserBaseComponent implements OnInit {
+
+  @Output()
+  public searchResult = new EventEmitter<string>();
+
   userList = [];
   detailUser = null;
   userDialog: UserNewDialogComponent;
@@ -119,7 +123,7 @@ export class UserBaseComponent implements OnInit {
 
   public save() {
     this.userService.save(this.detailUser).subscribe(status => {
-     this.openSnackBar('Save', 'Success');
+      this.openSnackBar('Save', 'Success');
     }, error => {
       this.openSnackBar('Fail to ', 'Save');
     });
@@ -128,6 +132,7 @@ export class UserBaseComponent implements OnInit {
   public searchWithName(text) {
     this.userService.byName(text).subscribe(userList => {
       this.userList = userList;
+      this.searchResult.emit(userList.length + 'found.');
     });
   }
 

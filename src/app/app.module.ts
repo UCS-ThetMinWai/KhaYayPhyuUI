@@ -17,24 +17,21 @@ import {PurchaseBaseComponent} from './Purchase/purchase-base/purchase-base.comp
 import {PurchaseOrderBaseComponent} from './PurchaseOrder/purchase-order-base/purchase-order-base.component';
 import {SaleOrderBaseComponent} from './SaleOrder/sale-order-base/sale-order-base.component';
 import {SaleBaseComponent} from './Sale/sale-base/sale-base.component';
-import {RawProductBaseComponent} from './RawProduct/raw-product-base/raw-product-base.component';
 import {PriceBaseComponent} from './Price/price-base/price-base.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatTab, MatTabsModule} from '@angular/material/tabs';
+import {MatTabsModule} from '@angular/material/tabs';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatListModule} from '@angular/material/list';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
-import { CustomerNewDialogComponent } from './customer/customer-new-dialog/customer-new-dialog.component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import { SaleNewDialogComponent } from './Sale/sale-new-dialog/sale-new-dialog.component';
-import { PurchaseNewDialogComponent } from './Purchase/purchase-new-dialog/purchase-new-dialog.component';
-import { RawProductNewDialogComponent } from './RawProduct/raw-product-new-dialog/raw-product-new-dialog.component';
-import { PriceNewDialogComponent } from './Price/price-new-dialog/price-new-dialog.component';
-import { PurchaseOrderNewDialogComponent } from './PurchaseOrder/purchase-order-new-dialog/purchase-order-new-dialog.component';
-import { SaleOrderNewDialogComponent } from './SaleOrder/sale-order-new-dialog/sale-order-new-dialog.component';
+import {CustomerNewDialogComponent} from './customer/customer-new-dialog/customer-new-dialog.component';
+import {SaleNewDialogComponent} from './Sale/sale-new-dialog/sale-new-dialog.component';
+import {PurchaseNewDialogComponent} from './Purchase/purchase-new-dialog/purchase-new-dialog.component';
+import {PriceNewDialogComponent} from './Price/price-new-dialog/price-new-dialog.component';
+import {PurchaseOrderNewDialogComponent} from './PurchaseOrder/purchase-order-new-dialog/purchase-order-new-dialog.component';
+import {SaleOrderNewDialogComponent} from './SaleOrder/sale-order-new-dialog/sale-order-new-dialog.component';
 import {ProductNewDialogComponent} from './Product/product-new-dialog/product-new-dialog.component';
 import {UserNewDialogComponent} from './user/user-new-dialog/user-new-dialog.component';
 import {_MatMenuDirectivesModule, MatMenuModule} from '@angular/material/menu';
@@ -55,7 +52,6 @@ import {MatTableModule} from '@angular/material/table';
     PurchaseOrderBaseComponent,
     SaleOrderBaseComponent,
     SaleBaseComponent,
-    RawProductBaseComponent,
     PriceBaseComponent,
     CustomerNewDialogComponent,
     ProductBaseComponent,
@@ -65,7 +61,6 @@ import {MatTableModule} from '@angular/material/table';
     PurchaseNewDialogComponent,
     SaleOrderBaseComponent,
     SaleNewDialogComponent,
-    RawProductNewDialogComponent,
     PriceNewDialogComponent,
     PurchaseOrderNewDialogComponent,
     SaleOrderNewDialogComponent

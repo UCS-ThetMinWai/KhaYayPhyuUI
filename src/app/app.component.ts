@@ -1,17 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ProductBaseComponent} from './Product/product-base/product-base.component';
 import {UserBaseComponent} from './user/user-base/user-base.component';
 import {CustomerBaseComponent} from './customer/customer-base/customer-base.component';
 import {SaleBaseComponent} from './Sale/sale-base/sale-base.component';
 import {PurchaseBaseComponent} from './Purchase/purchase-base/purchase-base.component';
 import {faPlusCircle, faSave, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {text} from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
 
   public appMain;
 
@@ -20,6 +21,8 @@ export class AppComponent implements OnInit {
   title = 'kyp-ui';
 
   selected = 'product';
+
+  searchResultText: string = '';
 
   @ViewChild(ProductBaseComponent)
   public productMain: ProductBaseComponent;
@@ -37,12 +40,26 @@ export class AppComponent implements OnInit {
   public purchaseMain: PurchaseBaseComponent;
 
   ngOnInit(): void {
+
   }
+
+  ngAfterViewInit(): void {
+    this.customerMain.searchResult.subscribe(customerText => {
+      this.searchResultText = customerText;
+    });
+    this.productMain.searchResult.subscribe(productText => {
+      this.searchResultText = productText;
+    });
+    this.userMain.searchResult.subscribe( userText => {
+      this.searchResultText = userText;
+    })
+  }
+
 
   search() {
     switch (this.selected) {
       case 'product':
-        this.productMain.search(this.searchText);
+        this.productMain.searchWithName(this.searchText);
         break;
       case 'user':
         this.userMain.searchWithName(this.searchText);

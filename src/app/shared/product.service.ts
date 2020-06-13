@@ -4,6 +4,7 @@ import {observable, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {BaseService} from './BaseService';
 import {Product} from '../domain/product';
+import {Customer} from '../domain/customer';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,15 @@ export class ProductService {
     });
 
     return observable;
+  }
+
+  public byName(name) {
+    return this.httpClient.get<Product[]>(this.getBaseURL() + '/' + name).pipe(map(ys => {
+      const productList = [];
+      console.log(ys);
+      ys.forEach(x => productList.push(Product.createProduct(x)));
+      return productList;
+    }));
   }
 
   private getBaseURL() {

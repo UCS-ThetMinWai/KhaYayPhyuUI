@@ -1,4 +1,3 @@
-import {Customer} from './customer';
 import {Product} from './product';
 
 export class SaleOrder {
@@ -32,7 +31,6 @@ export class SaleOrder {
     product.productName = productJson.productName;
     product.peckagingDate = new Date(productJson.peckagingDate);
     product.peckagingType = productJson.peckagingType;
-    product.rawProduct = Product.createRawProduct(productJson.rawProduct);
     return product;
   }
 

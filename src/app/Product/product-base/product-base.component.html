@@ -29,7 +29,7 @@
         <div class="col-3 " style="width: 200px; height: 50px">Pecking Type</div>
         <div class="col-9 editable">
           <span [hidden]="isDisabledEdit('peckagingType')" name="target">: {{detailProduct.peckagingType}} </span>
-          <mat-select [(ngModel)]="detailProduct.peckagingType" name="packingType"
+          <mat-select class="target paper" [(ngModel)]="detailProduct.peckagingType" name="packingType"
                       (selectionChange)="hideAndSave('peckagingType')"
                       [hidden]="isEnableEdit('peckagingType')">
             <mat-option value="PACK">PACK</mat-option>

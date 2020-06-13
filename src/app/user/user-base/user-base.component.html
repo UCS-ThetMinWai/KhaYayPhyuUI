@@ -43,7 +43,7 @@
         <div class="col-3 " style="width: 200px; height: 50px">User Role</div>
         <div class="col-9 editable">
           <span [hidden]="isDisabledEdit('role')" name="target">: {{detailUser.role}} </span>
-          <mat-select [(ngModel)]="detailUser.role" name="role"
+          <mat-select class="target paper" [(ngModel)]="detailUser.role" name="role"
                       (selectionChange)="hideAndSave('role')"
                       [hidden]="isEnableEdit('role')">
             <mat-option value="EMPLOYEE">EMPLOYEE</mat-option>

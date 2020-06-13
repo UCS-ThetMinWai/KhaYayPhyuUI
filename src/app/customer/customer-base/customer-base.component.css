@@ -36,6 +36,7 @@ mat-list-item:hover {
 .active {
   background-color: #050549;
   color: whitesmoke;
+  border-radius: 5px;
 
 }
 

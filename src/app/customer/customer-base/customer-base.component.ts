@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CustomerService} from '../../shared/customer.service';
 import {Customer} from '../../domain/customer';
 import {MatDialog} from '@angular/material/dialog';
@@ -6,6 +6,7 @@ import {CustomerNewDialogComponent} from '../customer-new-dialog/customer-new-di
 import {MatSnackBar} from '@angular/material/snack-bar';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {ProductNewDialogComponent} from '../../Product/product-new-dialog/product-new-dialog.component';
+import {EmitterVisitorContext} from '@angular/compiler';
 
 @Component({
   selector: 'app-customer-base',
@@ -17,6 +18,9 @@ export class CustomerBaseComponent implements OnInit {
   detailCustomer = null;
   customerDialog: CustomerNewDialogComponent;
   editStatus = {};
+
+  @Output()
+  public searchResult = new EventEmitter<string>();
 
   constructor(private customerService: CustomerService, private dialog: MatDialog, private snackBar: MatSnackBar) {
   }
@@ -49,7 +53,7 @@ export class CustomerBaseComponent implements OnInit {
 
   public showDetail(id) {
     console.log(id);
-     this.customerService.byId(id).subscribe(customer => {
+    this.customerService.byId(id).subscribe(customer => {
       this.detailCustomer = customer;
       const updatedIndex = this.findIndexOfCustomerFromList(customer);
       this.customerList[updatedIndex] = this.detailCustomer;
@@ -67,6 +71,8 @@ export class CustomerBaseComponent implements OnInit {
   public searchWithName(text) {
     this.customerService.byName(text).subscribe(customerList => {
       this.customerList = customerList;
+      console.log("here");
+      this.searchResult.emit(this.customerList.length + ' found.');
     });
   }
 

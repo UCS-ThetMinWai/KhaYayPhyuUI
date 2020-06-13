@@ -1,13 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ProductService} from '../../shared/product.service';
 import {Customer} from '../../domain/customer';
 import {ProductNewDialogComponent} from '../product-new-dialog/product-new-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {CustomerNewDialogComponent} from '../../customer/customer-new-dialog/customer-new-dialog.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {RawProductNewDialogComponent} from '../../RawProduct/raw-product-new-dialog/raw-product-new-dialog.component';
-import {RawProduct} from '../../domain/raw-product';
-import {RawProductService} from '../../shared/raw-product.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {element} from "protractor";
 import {Product} from '../../domain/product';
@@ -17,18 +14,21 @@ import {Product} from '../../domain/product';
   templateUrl: './product-base.component.html',
   styleUrls: ['./product-base.component.css']
 })
+
 export class ProductBaseComponent implements OnInit {
+
+  @Output()
+  public searchResult = new EventEmitter<string>();
+
   productList: Product[] = [];
 
   detailProduct = null;
 
   productDialog: ProductNewDialogComponent;
 
-  rawProductDialog: RawProductNewDialogComponent;
-
   editStatus = {};
 
-  constructor(private productService: ProductService, private dialog: MatDialog, private snackBar: MatSnackBar, private rawProductService: RawProductService) {
+  constructor(private productService: ProductService, private dialog: MatDialog, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -49,19 +49,11 @@ export class ProductBaseComponent implements OnInit {
     });
   }
 
-  public openRawProductDialog() {
-    const dialogRef = this.dialog.open(RawProductNewDialogComponent);
-    dialogRef.afterClosed().subscribe((rawProduct: RawProduct) => {
-      if (rawProduct == null) {
-        return;
-      }
-      rawProduct.id = 0;
-      this.rawProductService.save(rawProduct).subscribe(t => {
-        this.openSnackBar('Save', 'success!');
-        console.log(t);
-      }, error => {
-        this.openSnackBar('Message', 'Error');
-      });
+  public searchWithName(text) {
+    this.productService.byName(text).subscribe(productList => {
+      this.productList = productList;
+      console.log("here");
+      this.searchResult.emit(this.productList.length + ' found.');
     });
   }
 
