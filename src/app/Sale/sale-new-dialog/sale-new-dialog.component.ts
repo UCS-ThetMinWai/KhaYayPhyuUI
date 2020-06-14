@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {MatDialogRef} from '@angular/material/dialog';
 import {Sale} from '../../domain/sale';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -22,23 +22,29 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
 
   displayColumns: string[] = ['name'];
 
-  constructor(private dialogRef: MatDialogRef<Sale>, private snackBar: MatSnackBar, private httpClient: HttpClient, private productService: ProductService, private customerService: CustomerService) {
+  @ViewChildren('productQuantity')
+  productQuantity;
 
+  @ViewChildren('productSelection')
+  productSelection;
+
+  constructor(private dialogRef: MatDialogRef<Sale>, private snackBar: MatSnackBar, private httpClient: HttpClient, private productService: ProductService, private customerService: CustomerService) {
+    this.sale = new Sale();
   }
 
   ngAfterViewInit(): void {
+
+  }
+
+  ngOnInit(): void {
     this.sale = new Sale();
     this.initializeCustomer();
     this.sale.saleOrderList.push(new SaleOrder());
     this.sale.customer = new Customer();
     this.sale.saleDate = new Date();
-    this.productService.search().subscribe(productList => {
+    this.productService.searchWithProduct().subscribe(productList => {
       this.productList = productList;
     });
-  }
-
-  ngOnInit(): void {
-
   }
 
   public save() {
@@ -61,7 +67,7 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
         if (customer.name == null) {
           return;
         }
-        this.customerList.push(Sale.createCustomer(customer));
+        this.customerList.push(Customer.createCustomer(customer));
       });
     });
   }
@@ -93,9 +99,11 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
     this.dialogRef.close(null);
   }
 
-  updatePriceForName(saleOrder: SaleOrder, productStr: string) {
+  updatePriceForName(saleOrder: SaleOrder, productStr: string, index: number) {
     const productId = productStr.split(':')[1];
     const selectedProduct = this.findProductByBoId(productId);
+    if (selectedProduct == null)
+      return;
     if (selectedProduct.currentPrice == null) {
       return;
     }
@@ -103,16 +111,18 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
     saleOrder.updateAmount();
     saleOrder.product = selectedProduct;
     this.sale.updateTotal();
+    this.productQuantity.toArray()[index].nativeElement.focus();
   }
 
-  updatePriceForQuantity(saleOrder: SaleOrder, quantity: number) {
-    if (quantity <= 0 || saleOrder.product == null) {
-      saleOrder.amount = 0;
-      return;
-    }
-    saleOrder.quantity = quantity || 0;
-    saleOrder.updateAmount();
+  updatePriceForQuantity(saleOrder: SaleOrder, quantity: any, index: number) {
+    saleOrder.updateTotal(parseInt(quantity));
     this.sale.updateTotal();
+    if (index == this.sale.saleOrderList.length - 1) {
+      this.sale.saleOrderList.push(new SaleOrder());
+      setTimeout(() => {
+        this.productSelection.toArray()[index + 1].nativeElement.focus();
+      }, 10)
+    }
   }
 
 }

@@ -1,0 +1,9 @@
+:host{
+  padding:20px;
+}
+
+.row {
+  border-bottom:thin solid #ccc;
+  padding-bottom: 5px;
+  margin: 10px 0 10px 25px;
+}

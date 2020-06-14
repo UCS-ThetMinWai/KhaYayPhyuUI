@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 
-import {DetailComponent} from './detail/detail.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSliderModule} from '@angular/material/slider';
 import {OverlayContainer} from '@angular/cdk/overlay';
@@ -39,11 +38,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
+import {SaleDetailComponent} from "./Sale/sale-detail/sale-detail.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    DetailComponent,
     MainComponent,
     ProductBaseComponent,
     CustomerBaseComponent,
@@ -63,7 +62,8 @@ import {MatTableModule} from '@angular/material/table';
     SaleNewDialogComponent,
     PriceNewDialogComponent,
     PurchaseOrderNewDialogComponent,
-    SaleOrderNewDialogComponent
+    SaleOrderNewDialogComponent,
+    SaleDetailComponent
   ],
   imports: [
     BrowserModule,

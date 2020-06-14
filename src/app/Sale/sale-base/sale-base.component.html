@@ -1,39 +1,9 @@
-<mat-form-field style="display: none;">
-  <input matInput (keydown)="search()">
-</mat-form-field>
-<mat-list class="left">
-  <mat-list-item *ngFor="let sale of saleList" (click)="showDetail(sale.boId)"
-                 class="{{detailSale!= null && detailSale.id == sale.id ? 'active' : ''}}">
-    <span #item>{{sale.boId}}</span>
-  </mat-list-item>
-</mat-list>
-<div class="right" *ngIf="detailSale != null" style="hight: 400px;vertical-align: top;">
-  <div>
-    <table>
-      <tr style="height: 40px">
-        <td>BoId :</td>
-        <td>{{detailSale.boId}}</td>
-      </tr>
-      <tr style="height: 40px">
-        <td>Sale_Date :</td>
-        <td>{{detailSale.saleDate | date}}</td>
-      </tr>
-      <tr style="height: 40px">
-        <td>Status :</td>
-        <td>{{detailSale.saleStatus}}</td>
-      </tr>
-      <tr style="height: 40px">
-        <td>Pay_Amount :</td>
-        <td>{{detailSale.payAmount}}</td>
-      </tr>
-      <tr style="height: 40px">
-        <td>Total :</td>
-        <td>{{detailSale.total}}</td>
-      </tr>
-      <tr style="height: 40px">
-        <td>Balance :</td>
-        <td>{{detailSale.totalBalance()}}</td>
-      </tr>
-    </table>
-  </div>
+<div style="">
+  <mat-list class="left">
+    <mat-list-item *ngFor="let sale of saleList" (click)="showDetail(sale.boId)"
+                   class="{{detailSale!= null && detailSale.id == sale.id ? 'active' : ''}}">
+      <span #item>{{sale.boId}}</span>
+    </mat-list-item>
+  </mat-list>
+  <app-sale-detail [sale]="detailSale"></app-sale-detail>
 </div>

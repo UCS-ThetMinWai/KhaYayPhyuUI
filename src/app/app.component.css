@@ -23,8 +23,8 @@ mat-toolbar {
   display: inline-block;
   text-align: center;
   vertical-align: middle;
-  margin: 5px 5px;
-  padding: 0px 5px;
+  margin: 0px 5px;
+  padding: 0px 7px 10px 7px;
 }
 
 .menu-button div {
@@ -69,12 +69,13 @@ mat-toolbar {
 
 .active {
   position: relative;
-  border-radius: 1px;
-  background-color: #00006f;
-  color: silver;
-  border:thin solid #00006f;
+  border-radius: 0px;
+  background-color: whitesmoke;
+  color: #333;
+  border:0 solid #00006f;
+  margin-top:0px;
 }
 
 .active div {
-
+  padding:12px;
 }

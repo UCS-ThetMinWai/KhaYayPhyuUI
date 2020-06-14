@@ -1,40 +1,54 @@
 import {Product} from './product';
 
 export class SaleOrder {
-  public id: number;
-  public boId: string;
-  public status: string;
-  public peckagingType: string;
-  public quantity: number;
-  public weight: number;
-  public amount: number;
+  public id: number = 0;
+  public boId: string = '-1';
+  public status: string = 'OPEN';
+  public packagingType: string = '';
+  public quantity: number = 0;
+  public weight: number = 0;
+  public amount: number = 0;
   public product: Product;
 
   public static createSaleOrder(json: any) {
-    const saleOrder = new SaleOrder();
-    saleOrder.id = json.id;
-    saleOrder.boId = json.boId;
-    saleOrder.status = json.status;
-    saleOrder.peckagingType = json.peckagingType;
-    saleOrder.quantity = json.quantity;
-    saleOrder.weight = json.weight;
-    saleOrder.amount = json.amount;
-    saleOrder.product = SaleOrder.createProduct(json.product);
-    return saleOrder;
+    json.product = Product.createProduct(json.product)
+    return Object.assign(new SaleOrder(), json);
   }
 
-  public static createProduct(productJson: any) {
-    const product = new Product();
-    product.id = productJson.id;
-    product.boId = productJson.boId;
-    product.status = productJson.status;
-    product.productName = productJson.productName;
-    product.peckagingDate = new Date(productJson.peckagingDate);
-    product.peckagingType = productJson.peckagingType;
-    return product;
+  public static createSaleOrderList(jsonArr: any[]) {
+    const list: SaleOrder[] = [];
+    jsonArr.forEach(json => list.push(SaleOrder.createSaleOrder(json)));
+    return list;
   }
 
   public updateAmount() {
     this.amount = this.quantity * (this.product ? this.product.currentPrice.saleAmount : 0);
   }
+
+  public constructor() {
+    this.id = 0;
+    this.product = new Product();
+  }
+
+  public updateTotal(quantity) {
+    if (this.product == null || this.product.currentPrice == null)
+      return;
+    this.quantity = quantity;
+    this.amount = this.quantity * this.product.currentPrice.saleAmount;
+  }
+
+  public calculateTotal() {
+    if (!this.quantity || !this.product)
+      return 0;
+    return this.quantity * this.product.currentPrice.saleAmount;
+  }
+
+  get total() {
+    return this.amount
+  }
+
+  public toString() {
+    return "Sale Order" + this.id;
+  }
+
 }

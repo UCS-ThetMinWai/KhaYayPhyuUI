@@ -5,8 +5,8 @@ export class Product {
   public id: number;
   public status: string;
   public productName: string;
-  public peckagingDate: Date;
-  public peckagingType: string;
+  public packagingDate: Date;
+  public packagingType: string;
   public currentPrice: Price;
 
   public static createPrice(json: any) {
@@ -25,15 +25,9 @@ export class Product {
   }
 
   public static createProduct(productJson: any) {
-    const product = new Product();
-    product.id = productJson.id;
-    product.boId = productJson.boId;
-    product.status = productJson.status;
-    product.productName = productJson.productName;
-    product.peckagingDate = new Date(productJson.peckagingDate);
-    product.peckagingType = productJson.peckagingType;
-    product.currentPrice = Product.createPrice(productJson.currentPrice);
-    return product;
+    productJson = productJson || {}
+    productJson.packagingDate = productJson ? new Date() : new Date(productJson.packagingDate);
+    return Object.assign(new Product(), productJson);
   }
 
   public constructor() {

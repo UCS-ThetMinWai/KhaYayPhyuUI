@@ -1,6 +1,8 @@
 .left {
   width: 300px;
   display: inline-block;
+  float:left;
+  padding-top:0;
 }
 
 mat-form-field {
@@ -44,5 +46,13 @@ span.active {
 .content:hover{
   background-color: lightgreen;
   cursor: pointer;
+}
+
+app-sale-detail {
+  box-sizing: content-box;
+  display: inline-block;
+  width:calc(100% - 410px);
+  float:left;
+  padding:20px;
 }
 

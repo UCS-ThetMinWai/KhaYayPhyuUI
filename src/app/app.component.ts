@@ -4,8 +4,6 @@ import {UserBaseComponent} from './user/user-base/user-base.component';
 import {CustomerBaseComponent} from './customer/customer-base/customer-base.component';
 import {SaleBaseComponent} from './Sale/sale-base/sale-base.component';
 import {PurchaseBaseComponent} from './Purchase/purchase-base/purchase-base.component';
-import {faPlusCircle, faSave, faSearch} from '@fortawesome/free-solid-svg-icons';
-import {text} from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +18,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   title = 'kyp-ui';
 
-  selected = 'product';
+  selected = 'sale';
 
   searchResultText: string = '';
 
@@ -50,7 +48,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.productMain.searchResult.subscribe(productText => {
       this.searchResultText = productText;
     });
-    this.userMain.searchResult.subscribe( userText => {
+    this.userMain.searchResult.subscribe(userText => {
       this.searchResultText = userText;
     })
   }
@@ -66,6 +64,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         break;
       case 'customer':
         this.customerMain.searchWithName(this.searchText);
+        break;
+      case 'sale':
+        this.saleMain.search();
         break;
     }
   }

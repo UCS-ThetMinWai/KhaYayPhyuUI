@@ -17,3 +17,7 @@
 mat-form-field {
   display: block;
 }
+
+.number {
+  text-align: right;
+}
