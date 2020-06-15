@@ -42,10 +42,10 @@
       <div class="row" (dblclick)="show('currentPrice')">
         <div class="col-3 " style="width: 200px; height: 50px">Current Price</div>
         <div class="col-9 editable">
-          <span [hidden]="isDisabledEdit('currentPrice')" name="target">: {{detailProduct.currentPrice.saleAmount}} </span>
+          <span [hidden]="isDisabledEdit('currentPrice')" name="target">: {{detailProduct.salePrice.amount}} </span>
           <input type="text" class="target paper" name="product-current-price"
-                 (keydown.enter)="hideAndSave('currentPrice')"
-                 [(ngModel)]="detailProduct.currentPrice.saleAmount"
+                 (keydown.enter)="hideAndUpdatePrice('currentPrice')"
+                 [(ngModel)]="detailProduct.salePrice.amount"
                  [hidden]="isEnableEdit('currentPrice')"/>
         </div>
       </div>

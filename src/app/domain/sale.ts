@@ -30,7 +30,7 @@ export class Sale {
   public updateTotal() {
     this.total = 0;
     this.saleOrderList.forEach(so => {
-      console.log(so.product.currentSalePrice.saleAmount, so.quantity, so.calculateTotal());
+      console.log(so.product.salePrice.saleAmount, so.quantity, so.calculateTotal());
     });
     this.saleOrderList.forEach(saleOrder => this.total += saleOrder.product ? saleOrder.calculateTotal() : 0);
   }

@@ -104,7 +104,7 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
     const selectedProduct = this.findProductByBoId(productId);
     if (selectedProduct == null)
       return;
-    if (selectedProduct.currentSalePrice == null) {
+    if (selectedProduct.salePrice == null) {
       return;
     }
     saleOrder.quantity = saleOrder.quantity || 0;

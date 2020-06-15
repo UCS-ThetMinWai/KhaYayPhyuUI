@@ -83,6 +83,13 @@ export class ProductBaseComponent implements OnInit {
     this.editStatus[elementName] = false;
   }
 
+  public hideAndUpdatePrice(elementName) {
+    this.productService.updateSalePrice(this.detailProduct, this.detailProduct.salePrice.amount).subscribe(product => {
+      this.replaceList(product);
+      this.editStatus[elementName] = false;
+    });
+  }
+
   public isEnableEdit(elementName) {
     return !this.editStatus[elementName];
   }
@@ -104,6 +111,11 @@ export class ProductBaseComponent implements OnInit {
         return i;
       }
     }
+  }
+
+  private replaceList(product: Product) {
+    const index = this.findIndexOfProductFromList(product);
+    this.productList[index] = product;
   }
 
   public openProductDialog() {

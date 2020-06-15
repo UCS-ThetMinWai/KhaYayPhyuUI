@@ -22,7 +22,7 @@ export class PurchaseOrder {
   }
 
   public updateAmount() {
-    this.amount = this.quantity * (this.product ? this.product.currentSalePrice.saleAmount : 0);
+    this.amount = this.quantity * (this.product ? this.product.salePrice.saleAmount : 0);
   }
 
   public constructor() {
@@ -31,16 +31,16 @@ export class PurchaseOrder {
   }
 
   public updateTotal(quantity) {
-    if (this.product == null || this.product.currentSalePrice == null)
+    if (this.product == null || this.product.salePrice == null)
       return;
     this.quantity = quantity;
-    this.amount = this.quantity * this.product.currentSalePrice.saleAmount;
+    this.amount = this.quantity * this.product.salePrice.saleAmount;
   }
 
   public calculateTotal() {
     if (!this.quantity || !this.product)
       return 0;
-    return this.quantity * this.product.currentSalePrice.saleAmount;
+    return this.quantity * this.product.salePrice.saleAmount;
   }
 
   get total() {

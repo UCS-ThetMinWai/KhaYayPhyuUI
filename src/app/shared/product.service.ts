@@ -11,6 +11,10 @@ import {Customer} from '../domain/customer';
 })
 export class ProductService {
 
+  static jsonToProduct = map(json => {
+    return Object.assign(new Product(), json);
+  });
+
   constructor(private httpClient: HttpClient) {
   }
 
@@ -30,7 +34,7 @@ export class ProductService {
   }
 
   public searchWithProduct() {
-    return this.httpClient.get<Product[]>(this.getBaseURL() + '/').pipe(map(xs => {
+    return this.httpClient.get<Product[]>(this.getBaseURL()).pipe(map(xs => {
       const productList = [];
       for (const x of xs) {
         productList.push(Product.createProduct(x));
@@ -59,12 +63,16 @@ export class ProductService {
   }
 
   public byName(name) {
-    return this.httpClient.get<Product[]>(this.getBaseURL() + '/' + name).pipe(map(ys => {
+    return this.httpClient.get<Product[]>(this.getBaseURL()).pipe(map(ys => {
       const productList = [];
       console.log(ys);
       ys.forEach(x => productList.push(Product.createProduct(x)));
       return productList;
     }));
+  }
+
+  public updateSalePrice(product: Product, amount: number) {
+    return this.httpClient.put<Product>(this.getBaseURL() + "/sale/" + product.boId + "/" + amount, "").pipe(ProductService.jsonToProduct);
   }
 
   private getBaseURL() {

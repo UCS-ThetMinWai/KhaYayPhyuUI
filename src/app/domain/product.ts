@@ -7,7 +7,7 @@ export class Product {
   public productName: string;
   public packagingDate: Date;
   public packagingType: string;
-  public currentSalePrice: Price;
+  public salePrice: Price;
   public currentBuyPrice: Price;
 
   public static createPrice(json: any) {
@@ -32,7 +32,7 @@ export class Product {
   }
 
   public constructor() {
-    this.currentSalePrice = new Price();
+    this.salePrice = new Price();
     this.currentBuyPrice = new Price();
   }
 

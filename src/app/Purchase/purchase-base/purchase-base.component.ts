@@ -19,8 +19,7 @@ export class PurchaseBaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-        throw new Error("Method not implemented.");
-    }
+  }
 
   public search() {
     return this.purchaseService.searchWithPurchase().subscribe(result => {

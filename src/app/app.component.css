@@ -52,6 +52,8 @@ mat-toolbar {
   position: relative;
   background-color: inherit;
   transition: width 1s;
+  outline: 0 solid red;
+  border: 0;
 }
 
 .search {
@@ -59,6 +61,7 @@ mat-toolbar {
   border-radius: 20px;
   width: calc(100% - 60px);
   padding-left: 15px;
+  border: 0;
 }
 
 .search-div:hover {

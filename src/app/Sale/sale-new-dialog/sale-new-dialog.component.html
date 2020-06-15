@@ -27,7 +27,7 @@
                  #productSelection
                  (blur)="updatePriceForName(saleOrder, $event.target.value, i)" />
         </td>
-        <td width="100" class="number"> {{saleOrder.product != null ? saleOrder.product.currentSalePrice.saleAmount : 0}}</td>
+        <td width="100" class="number"> {{saleOrder.product != null ? saleOrder.product.salePrice.saleAmount : 0}}</td>
         <td width="100" class="number">
           <input matInput style="border: thin solid black;text-align: left;border:none;" type="number" min="1" list="quantity" name="quantity-{{i}}"
                  #productQuantity
