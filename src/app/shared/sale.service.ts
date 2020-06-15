@@ -17,7 +17,7 @@ export class SaleService extends BaseService {
 
   public save(sale: Sale) {
     sale.saleOrderList.forEach(saleOrder => {
-      saleOrder.product.currentPrice = null;
+      saleOrder.product.currentSalePrice = null;
       saleOrder.product.packagingDate = null;
     });
     return this.httpClient.post(this.getBase(), sale);

@@ -1,19 +1,58 @@
-<form>
-  <span style="color: red" class="cancel-button fa fa-times" (click)="closeDialog()"></span>
-  <mat-form-field style="width: 600px">
-    <input matInput type="date" placeholder="Date" name="date" required="Invalid name!" [(ngModel)]="purchase.purchaseDate"/>
+<form style="width: 800px;height: calc(100vh - 100px);">
+  <span style="color: red" class="cancel-button fa fa-times-circle"  style="color:tomato;padding:3px;" (click)="closeDialog()" ></span>
+  <mat-form-field style="width:80%;">
+    <mat-label>Customer Name</mat-label>
+    <mat-select name="customer-name">
+      <mat-option *ngFor="let customer of customerList" (click)="updateCustomer(customer)"
+                  [value]="customer.name">{{customer.name}}</mat-option>
+    </mat-select>
   </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Total" name="total" [(ngModel)]="purchase.total"/>
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Pay Amount" name="payAmount" [(ngModel)]="purchase.payAmount">
-  </mat-form-field>
-  <button mat-raised-button style="float: right; bottom: -20px; background: blue; color: aliceblue;margin-bottom: 10px"
-          (click)="save()">Save
-  </button>
-  <button mat-raised-button class="reset-button" type="reset"
-          style="float: right;right: 70px; background: red; color: aliceblue;">Cancel
-  </button>
+  <table class="table table-striped" style="margin-bottom: 0px;">
+    <tr>
+      <th width="50">#</th>
+      <th>Name</th>
+      <th width="100" class="number">Price</th>
+      <th width="100" class="number">Qty</th>
+      <th width="100" class="number"></th>
+      <th width="50"(click)="addNewPurchaseOrder()"><span class="fa fa-plus" style="color: #5cb85c "></span></th>
+    </tr>
+  </table>
+  <div style="max-height: 300px;overflow: auto;">
+    <table class="table striped-table">
+      <tr *ngFor="let purchaseOrder of purchase.purchaseOrderList; let i = index;">
+        <td width="50">{{i + 1}}.</td>
+        <td>
+          <input matInput type="text" list="name" name="purchase-order-name-{{i}}"
+                 (change)="updatePriceForName(purchaseOrder, $event.target.value, i)"
+                 #productSelection
+                 (blur)="updatePriceForName(purchaseOrder, $event.target.value, i)" />
+        </td>
+        <td width="100" class="number"> {{purchaseOrder.product != null ? purchaseOrder.product.currentBuyPrice.buyAmount : 0}}</td>
+        <td width="100" class="number">
+          <input matInput style="border: thin solid black;text-align: left;border:none;" type="number" min="1" list="weight" name="quantity-{{i}}"
+                 #productQuantity
+                 (change)="updatePriceForQuantity(purchaseOrder, $event.target.value, i)">
+        </td>
+        <td width="100" class="number">
+          {{purchaseOrder.amount}}
+        </td>
+        <td width="50" (click)="purchase.removePurchaseOrder(i)"><span class="fa fa-trash-alt" style="color: tomato" ></span></td>
+      </tr>
+    </table>
+  </div>
+  <datalist id="name">
+    <option *ngFor="let product of productList">{{product.productName}}:{{product.boId}}</option>
+  </datalist>
+
+  <div style="position: absolute;bottom:20px;width: 99%;">
+    <div class="col-md-3">
+      <div style="display:inline-block; position:absolute;top:0; width:500px;right:100px;text-align: right;">
+        <span style="color: #aaa;">Total: </span> {{purchase.liveTotal || 0}}
+      </div>
+    </div>
+    <button mat-raised-button style="position:absolute;right: 10px; background: blue; color: aliceblue;"
+            (click)="save()">Save
+    </button>
+  </div>
 </form>
 

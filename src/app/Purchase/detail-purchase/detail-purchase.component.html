@@ -1,0 +1,32 @@
+<mat-card *ngIf="purchase!=null">
+  <div class="row" >
+    <div class="col-md-3" >ID</div>
+    <div class="col-md-9" >{{purchase.boId|uppercase}}</div>
+  </div>
+  <div class="row" >
+    <div class="col-md-3" >Date</div>
+    <div class="col-md-9" >{{purchase.purchaseDate|date}}</div>
+  </div>
+  <div class="row" style="border-bottom: 0 solid #ccc;" >
+    <div class="col-md-3" >Total</div>
+    <div class="col-md-9" >{{purchase.liveTotal}}</div>
+  </div>
+  <div style="padding-top:20px">
+    <table class="table">
+      <tr>
+        <th width="50">#</th>
+        <th>Product</th>
+        <th width="50">Qty</th>
+        <th width="100">Amount</th>
+        <th width="150">Total</th>
+      </tr>
+      <tr *ngFor="let po of purchase.purchaseOrderList; let index= index">
+        <td>{{index+1}}. </td>
+        <td>{{po.product.productName}}</td>
+        <td>{{po.quantity}}</td>
+        <td>{{po.product.currentBuyPrice.buyAmount}}</td>
+        <td>{{po.total}}</td>
+      </tr>
+    </table>
+  </div>
+</mat-card>

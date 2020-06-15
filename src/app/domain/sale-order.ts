@@ -1,6 +1,6 @@
 import {Product} from './product';
 
-export class SaleOrder {
+export class PurchaseOrder {
   public id: number = 0;
   public boId: string = '-1';
   public status: string = 'OPEN';
@@ -11,18 +11,18 @@ export class SaleOrder {
   public product: Product;
 
   public static createSaleOrder(json: any) {
-    json.product = Product.createProduct(json.product)
-    return Object.assign(new SaleOrder(), json);
+    json.product = Product.createProduct(json.product);
+    return Object.assign(new PurchaseOrder(), json);
   }
 
   public static createSaleOrderList(jsonArr: any[]) {
-    const list: SaleOrder[] = [];
-    jsonArr.forEach(json => list.push(SaleOrder.createSaleOrder(json)));
+    const list: PurchaseOrder[] = [];
+    jsonArr.forEach(json => list.push(PurchaseOrder.createSaleOrder(json)));
     return list;
   }
 
   public updateAmount() {
-    this.amount = this.quantity * (this.product ? this.product.currentPrice.saleAmount : 0);
+    this.amount = this.quantity * (this.product ? this.product.currentSalePrice.saleAmount : 0);
   }
 
   public constructor() {
@@ -31,20 +31,20 @@ export class SaleOrder {
   }
 
   public updateTotal(quantity) {
-    if (this.product == null || this.product.currentPrice == null)
+    if (this.product == null || this.product.currentSalePrice == null)
       return;
     this.quantity = quantity;
-    this.amount = this.quantity * this.product.currentPrice.saleAmount;
+    this.amount = this.quantity * this.product.currentSalePrice.saleAmount;
   }
 
   public calculateTotal() {
     if (!this.quantity || !this.product)
       return 0;
-    return this.quantity * this.product.currentPrice.saleAmount;
+    return this.quantity * this.product.currentSalePrice.saleAmount;
   }
 
   get total() {
-    return this.amount
+    return this.amount;
   }
 
   public toString() {

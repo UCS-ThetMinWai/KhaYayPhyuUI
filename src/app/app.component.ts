@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   title = 'kyp-ui';
 
-  selected = 'sale';
+  selected = 'purchase';
 
   searchResultText: string = '';
 
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
     this.userMain.searchResult.subscribe(userText => {
       this.searchResultText = userText;
-    })
+    });
   }
 
 
@@ -67,6 +67,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         break;
       case 'sale':
         this.saleMain.search();
+        break;
+      case 'purchase':
+        this.purchaseMain.search();
         break;
     }
   }

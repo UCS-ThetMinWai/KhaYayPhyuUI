@@ -7,7 +7,8 @@ export class Product {
   public productName: string;
   public packagingDate: Date;
   public packagingType: string;
-  public currentPrice: Price;
+  public currentSalePrice: Price;
+  public currentBuyPrice: Price;
 
   public static createPrice(json: any) {
     const price = new Price();
@@ -25,13 +26,14 @@ export class Product {
   }
 
   public static createProduct(productJson: any) {
-    productJson = productJson || {}
+    productJson = productJson || {};
     productJson.packagingDate = productJson ? new Date() : new Date(productJson.packagingDate);
     return Object.assign(new Product(), productJson);
   }
 
   public constructor() {
-    this.currentPrice = new Price();
+    this.currentSalePrice = new Price();
+    this.currentBuyPrice = new Price();
   }
 
 }

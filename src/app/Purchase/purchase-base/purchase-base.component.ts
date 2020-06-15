@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
   styleUrls: ['./purchase-base.component.css']
 })
 export class PurchaseBaseComponent implements OnInit {
+
   purchaseList: Purchase[] = [];
   detailPurchase = null;
   pruchaseDialog: PurchaseNewDialogComponent;
@@ -18,19 +19,24 @@ export class PurchaseBaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+        throw new Error("Method not implemented.");
+    }
+
+  public search() {
+    return this.purchaseService.searchWithPurchase().subscribe(result => {
+      this.purchaseList = result;
+    });
   }
 
-  public remove(boId) {
-    let index = 0;
-    for (let i = 0; i < this.purchaseList.length; i++) {
-      const purchase = this.purchaseList[i];
-      if (purchase.boId === boId) {
-        index = i;
-        break;
-      }
-    }
-    this.purchaseList.splice(index, 1);
-    this.detailPurchase = null;
+  public showDetail(id) {
+    return this.purchaseService.byId(id).subscribe(sale => {
+      this.detailPurchase = sale;
+      console.log(this.detailPurchase);
+    });
+  }
+
+  public toDate(timeStamp) {
+    return new Date(timeStamp);
   }
 
   public openPurchaseDialog() {
@@ -39,7 +45,6 @@ export class PurchaseBaseComponent implements OnInit {
       if (purchase == null) {
         return;
       }
-
       purchase.id = 0;
       this.purchaseService.save(purchase).subscribe(t => {
         console.log(t);
@@ -47,23 +52,9 @@ export class PurchaseBaseComponent implements OnInit {
     });
   }
 
-  public search() {
-    this.purchaseService.searchWithPurchase().subscribe(result => {
-      console.log('Result is ', result);
-      this.purchaseList = result;
-    });
-  }
-
   public save() {
     this.purchaseService.save(this.detailPurchase).subscribe(status => {
       window.alert('Success');
-    });
-  }
-
-  public showDetail(id) {
-    this.purchaseService.byId(id).subscribe(purchase => {
-      this.detailPurchase = purchase;
-      console.log(this.detailPurchase);
     });
   }
 }

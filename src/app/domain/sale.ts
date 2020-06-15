@@ -1,6 +1,5 @@
-import {SaleOrder} from './sale-order';
+import {PurchaseOrder} from './sale-order';
 import {Customer} from './customer';
-import {Product} from './product';
 
 export class Sale {
   public id: number;
@@ -9,19 +8,19 @@ export class Sale {
   public payAmount: number;
   public total: number;
   public saleDate: Date;
-  public saleOrderList: SaleOrder[] = [];
+  public saleOrderList: PurchaseOrder[] = [];
   public customer: Customer;
 
   public static createSale(json: any) {
     json.customer = Customer.createCustomer(json);
-    json.saleOrderList = SaleOrder.createSaleOrderList(json.saleOrderList);
+    json.saleOrderList = PurchaseOrder.createSaleOrderList(json.saleOrderList);
     return Object.assign(new Sale(), json);
   }
 
   public constructor() {
     this.saleOrderList = [];
     this.customer = new Customer();
-    this.saleDate = new Date()
+    this.saleDate = new Date();
   }
 
   public totalBalance() {
@@ -31,8 +30,8 @@ export class Sale {
   public updateTotal() {
     this.total = 0;
     this.saleOrderList.forEach(so => {
-      console.log(so.product.currentPrice.saleAmount, so.quantity, so.calculateTotal())
-    })
+      console.log(so.product.currentSalePrice.saleAmount, so.quantity, so.calculateTotal());
+    });
     this.saleOrderList.forEach(saleOrder => this.total += saleOrder.product ? saleOrder.calculateTotal() : 0);
   }
 
