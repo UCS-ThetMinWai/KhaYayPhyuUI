@@ -63,6 +63,15 @@
         </div>
       </div>
     </div>
+    <div *ngIf="chartData!=null && true">
+      <canvas baseChart chartType="bar" style="width: 100%;height: 300px;"
+              [datasets]="chartData.dataset"
+              [labels]="chartData.chartLabel"
+              [options]="chartOption"
+              [legend]="barChartLegend"
+              [chartType]="'line'">
+      </canvas>
+    </div>
     <div style="position:absolute;right:10px;bottom:10px;">
       <button mat-fab color="warn" (click)="remove(detailProduct)">
         <span class="fa fa-trash-alt"></span>

@@ -8,6 +8,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {element} from "protractor";
 import {Product} from '../../domain/product';
+import {ProductChartData} from "../../domain/product-chart-data";
 
 @Component({
   selector: 'app-product-base',
@@ -24,9 +25,14 @@ export class ProductBaseComponent implements OnInit {
 
   detailProduct = null;
 
+  chartData : ProductChartData= null;
+
   productDialog: ProductNewDialogComponent;
+  barChartLegend = true;
 
   editStatus = {};
+
+  chartOption: any = {scaleShowVerticalLines: false, responsive: true};
 
   constructor(private productService: ProductService, private dialog: MatDialog, private snackBar: MatSnackBar) {
   }
@@ -46,6 +52,7 @@ export class ProductBaseComponent implements OnInit {
       this.detailProduct = product;
       const updatedIndex = this.findIndexOfProductFromList(product);
       this.productList[updatedIndex] = this.detailProduct;
+      this.chartData = new ProductChartData(product);
     });
   }
 

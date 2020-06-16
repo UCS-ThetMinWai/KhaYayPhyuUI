@@ -34,9 +34,6 @@ export class Purchase {
 
   public updateTotal() {
     this.total = 0;
-    this.purchaseOrderList.forEach(po => {
-      console.log(po.product.currentBuyPrice.buyAmount, po.quantity, po.calculateTotal());
-    });
     this.purchaseOrderList.forEach(saleOrder => this.total += saleOrder.product ? saleOrder.calculateTotal() : 0);
   }
 

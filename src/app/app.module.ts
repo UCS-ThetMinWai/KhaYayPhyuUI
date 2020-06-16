@@ -39,7 +39,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import {SaleDetailComponent} from "./Sale/sale-detail/sale-detail.component";
-import { DetailPurchaseComponent } from './Purchase/detail-purchase/detail-purchase.component';
+import {DetailPurchaseComponent} from './Purchase/detail-purchase/detail-purchase.component';
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
   declarations: [
@@ -88,12 +89,15 @@ import { DetailPurchaseComponent } from './Purchase/detail-purchase/detail-purch
     MatSelectModule,
     MatIconModule,
     MatTableModule,
+    ChartsModule
   ],
   exports: [MatButtonModule],
   providers: [MatSnackBar],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
+
 export class UnicornCandyAppModule {
   constructor(overlayContainer: OverlayContainer) {
     overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
