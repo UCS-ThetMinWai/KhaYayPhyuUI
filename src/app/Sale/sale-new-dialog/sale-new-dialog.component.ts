@@ -3,7 +3,7 @@ import {MatDialogRef} from '@angular/material/dialog';
 import {Sale} from '../../domain/sale';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HttpClient} from '@angular/common/http';
-import {PurchaseOrder} from '../../domain/sale-order';
+import {SaleOrder} from '../../domain/sale-order';
 import {ProductService} from '../../shared/product.service';
 import {CustomerService} from '../../shared/customer.service';
 import {Product} from '../../domain/product';
@@ -16,7 +16,7 @@ import {Customer} from '../../domain/customer';
 })
 export class SaleNewDialogComponent implements OnInit, AfterViewInit {
   sale: Sale;
-  saleOrderList: PurchaseOrder[];
+  saleOrderList: SaleOrder[];
   customerList: Customer[];
   productList: Product[];
 
@@ -39,7 +39,7 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.sale = new Sale();
     this.initializeCustomer();
-    this.sale.saleOrderList.push(new PurchaseOrder());
+    this.sale.saleOrderList.push(new SaleOrder());
     this.sale.customer = new Customer();
     this.sale.saleDate = new Date();
     this.productService.searchWithProduct().subscribe(productList => {
@@ -81,7 +81,7 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
     this.sale.customer = customer;
   }
 
-  public updateSaleOrder(saleOrder: PurchaseOrder) {
+  public updateSaleOrder(saleOrder: SaleOrder) {
     // this.sale.saleOrder = saleOrder;
   }
 
@@ -92,14 +92,14 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
   }
 
   public addNewSaleOrder() {
-    this.sale.saleOrderList.push(new PurchaseOrder());
+    this.sale.saleOrderList.push(new SaleOrder());
   }
 
   closeDialog() {
     this.dialogRef.close(null);
   }
 
-  updatePriceForName(saleOrder: PurchaseOrder, productStr: string, index: number) {
+  updatePriceForName(saleOrder: SaleOrder, productStr: string, index: number) {
     const productId = productStr.split(':')[1];
     const selectedProduct = this.findProductByBoId(productId);
     if (selectedProduct == null)
@@ -107,6 +107,7 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
     if (selectedProduct.salePrice == null) {
       return;
     }
+    saleOrder.price = selectedProduct.salePrice.amount;
     saleOrder.quantity = saleOrder.quantity || 0;
     saleOrder.updateAmount();
     saleOrder.product = selectedProduct;
@@ -114,11 +115,11 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
     this.productQuantity.toArray()[index].nativeElement.focus();
   }
 
-  updatePriceForQuantity(saleOrder: PurchaseOrder, quantity: any, index: number) {
+  updatePriceForQuantity(saleOrder: SaleOrder, quantity: any, index: number) {
     saleOrder.updateTotal(parseInt(quantity));
     this.sale.updateTotal();
     if (index == this.sale.saleOrderList.length - 1) {
-      this.sale.saleOrderList.push(new PurchaseOrder());
+      this.sale.saleOrderList.push(new SaleOrder());
       setTimeout(() => {
         this.productSelection.toArray()[index + 1].nativeElement.focus();
       }, 10);

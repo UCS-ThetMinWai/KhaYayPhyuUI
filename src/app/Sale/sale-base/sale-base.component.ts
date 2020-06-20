@@ -14,6 +14,8 @@ export class SaleBaseComponent implements OnInit {
   detailSale = null;
   saleDialog: SaleNewDialogComponent;
 
+  viewReport = false;
+
   constructor(private saleService: SaleService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -47,6 +49,12 @@ export class SaleBaseComponent implements OnInit {
         console.log(t);
       });
     });
+  }
+
+  public saleReport() {
+    this.detailSale = null;
+    this.saleList = [];
+    this.viewReport = !this.viewReport
   }
 
   public save() {

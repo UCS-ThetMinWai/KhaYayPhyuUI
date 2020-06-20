@@ -1,19 +1,19 @@
 .left {
   width: 300px;
   display: inline-block;
-  float:left;
-  padding-top:0;
+  float: left;
+  padding-top: 0;
 }
 
 mat-form-field {
   height: 100px;
-  width:200px;
+  width: 200px;
 }
 
 .right {
   width: calc(100% - 400px);
   display: inline-block;
-  padding:10px;
+  padding: 10px;
 }
 
 mat-list-item {
@@ -24,26 +24,27 @@ mat-list-item:last-child {
   border-bottom: 0 solid #ccc;
 }
 
-mat-list-item:hover{
+mat-list-item:hover {
   cursor: pointer;
 }
 
 .content {
-  padding:10px;
+  padding: 10px;
   border: thin solid dodgerblue;
-  margin:5px;
+  margin: 5px;
   border-radius: 9px;
 }
 
 .active {
   background-color: dodgerblue;
 }
+
 span.active {
-  color:green;
+  color: green;
   background-color: lightgreen;
 }
 
-.content:hover{
+.content:hover {
   background-color: lightgreen;
   cursor: pointer;
 }
@@ -51,8 +52,18 @@ span.active {
 app-sale-detail {
   box-sizing: content-box;
   display: inline-block;
-  width:calc(100% - 410px);
-  float:left;
-  padding:20px;
+  width: calc(100% - 410px);
+  float: left;
+  padding: 20px;
+}
+
+.action {
+  position: fixed;
+  left: 200px;
+  bottom: 0;
+  height: 30px;
+
+  width: 300px;
+  background-color: inherit;
 }
 

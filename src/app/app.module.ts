@@ -41,7 +41,7 @@ import {MatTableModule} from '@angular/material/table';
 import {SaleDetailComponent} from "./Sale/sale-detail/sale-detail.component";
 import {DetailPurchaseComponent} from './Purchase/detail-purchase/detail-purchase.component';
 import {ChartsModule} from "ng2-charts";
-import {MomentModule} from 'ngx-moment';
+import {SaleReportComponent} from './Sale/sale-report/sale-report.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +67,8 @@ import {MomentModule} from 'ngx-moment';
     PurchaseOrderNewDialogComponent,
     SaleOrderNewDialogComponent,
     SaleDetailComponent,
-    DetailPurchaseComponent
+    DetailPurchaseComponent,
+    SaleReportComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +92,6 @@ import {MomentModule} from 'ngx-moment';
     MatIconModule,
     MatTableModule,
     ChartsModule,
-    MomentModule
   ],
   exports: [MatButtonModule],
   providers: [MatSnackBar],

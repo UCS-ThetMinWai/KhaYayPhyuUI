@@ -25,14 +25,18 @@ export class ProductBaseComponent implements OnInit {
 
   detailProduct = null;
 
-  chartData : ProductChartData= null;
+  chartData: ProductChartData = null;
 
   productDialog: ProductNewDialogComponent;
+
   barChartLegend = true;
 
   editStatus = {};
 
-  chartOption: any = {scaleShowVerticalLines: false, responsive: true};
+  chartOption: any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
 
   constructor(private productService: ProductService, private dialog: MatDialog, private snackBar: MatSnackBar) {
   }
@@ -42,7 +46,6 @@ export class ProductBaseComponent implements OnInit {
 
   public search(text) {
     this.productService.searchWithProduct().subscribe(result => {
-      console.log('Result is ', result);
       this.productList = result;
     });
   }

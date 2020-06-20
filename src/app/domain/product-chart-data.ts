@@ -1,20 +1,23 @@
 import {Product} from './product';
-// import moment = require("moment");
 import * as moment from 'moment';
-import {start} from 'repl';
+import {start} from "repl";
 
 export class ProductChartData {
   public chartOption: any = {scaleShowVerticalLines: false, responsive: true};
   public dataset: any = [];
   public chartLabel: string[] = [];
 
-  private yearlyDataByDay: any = {};
-
-  private yearlyPurchaseByDate: any = {};
+  public dateGenerator = function* (start, end) {
+    end = moment(end).add(1, 'day');
+    while (start.isBefore(end)) {
+      yield start;
+      start = start.add(1, 'day');
+    }
+  }
 
   constructor(private product: Product) {
-    this.updateChartLabel();
-    this.updateDataset();
+    this.generateLabel();
+    this.updateDataset()
   }
 
   private initializeData() {
@@ -23,13 +26,12 @@ export class ProductChartData {
     let endDate = moment((year + 1) + '-1-1');
     while (startDate.isBefore(endDate)) {
       const key = this.formatMomentKey(startDate);
-      this.yearlyDataByDay[key] = 0;
       startDate = startDate.add(1, 'day');
       this.chartLabel.push(key);
     }
   }
 
-  private updateChartLabel() {
+  private generateLabel() {
     const year = new Date().getFullYear();
     let startDate = moment(year + '-1-1');
     const endDate = moment((year + 1) + '-1-1');
@@ -41,15 +43,15 @@ export class ProductChartData {
   }
 
   private updateDataset() {
-    // this.calculateSaleData();
+    this.calculateSaleData();
     this.calculatePurchaseData();
   }
 
   private calculateSaleData() {
-    this.populateSalePriceToYearlyData();
-    const monthlySalePurchase = this.extractPriceToArray();
+    const saleMap = this.generateSaleMap();
+    const monthlySale = this.extractPriceToArray(saleMap);
     this.dataset[0] = {
-      data: monthlySalePurchase,
+      data: monthlySale,
       label: 'Sale Amount',
       borderWidth: 1,
       backgroundColor: 'rgba(0,0,0,0.0)'
@@ -57,8 +59,8 @@ export class ProductChartData {
   }
 
   private calculatePurchaseData() {
-    this.populatePurchasePriceToYearlyData();
-    const monthlyAveragePurchase = this.extractPurchasePriceToArray(); // this.dataset[0].data;
+    const purchaseMap  = this.generatePurchaseMap();
+    const monthlyAveragePurchase = this.extractPriceToArray(purchaseMap);
     this.dataset[1] = {
       data: monthlyAveragePurchase,
       label: 'Purchase Amount',
@@ -68,33 +70,38 @@ export class ProductChartData {
     };
   }
 
-  private populateSalePriceToYearlyData() {
+  private generatePurchaseMap() {
+    const purchaseMap = {};
+    this.product.purchasePriceHistory.forEach(price => {
+      const key = moment(price.date);
+      purchaseMap[this.formatMomentKey(key)] = price.amount;
+    })
+    purchaseMap[this.formatMomentKey(moment(this.product.purchasePrice.date))] = this.product.purchasePrice.amount;
+    console.log(purchaseMap)
+    return purchaseMap;
+  }
+
+  private generateSaleMap() {
+    const map = {};
     this.product.salePriceHistory.forEach(salePrice => {
       const key = moment(salePrice.date);
-      this.yearlyPurchaseByDate[this.formatMomentKey(key)] = salePrice.amount;
+      map[this.formatMomentKey(key)] = salePrice.amount;
     });
-    this.yearlyPurchaseByDate[this.formatMomentKey(moment(this.product.salePrice.date))] = this.product.salePrice.amount;
+    map[this.formatMomentKey(moment(this.product.salePrice.date))] = this.product.salePrice.amount;
+    return map;
   }
 
-  private populatePurchasePriceToYearlyData() {
-    this.product.purchasePriceHistory.forEach(purchasePrice => {
-      const key = moment(purchasePrice.date);
-      this.yearlyPurchaseByDate[this.formatMomentKey(key)] = purchasePrice.amount;
-    });
-    this.yearlyPurchaseByDate[this.formatMomentKey(moment(this.product.purchasePrice.date))] = this.product.purchasePrice.amount;
-  }
-
-  private extractPriceToArray() {
+  private extractPriceToArray(map) {
     const datas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     const totalDay = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     const year = new Date().getFullYear();
     let startDate = moment(year + '-1-1');
     let endDate = moment((year + 1) + '-1-1');
 
-    let amount = this.yearlyDataByDay['1-1-' + year] || 0;
-    while (startDate.isBefore(endDate)) {
-      const month = startDate.get('month');
-      let saleAmount = this.yearlyDataByDay[this.formatMomentKey(startDate)];
+    let amount = map['1-1-' + year] || 0;
+    for (const date of this.dateGenerator(startDate, endDate)) {
+      const month = date.get('month');
+      let saleAmount = map[this.formatMomentKey(date)];
       if (!saleAmount) {
         saleAmount = amount;
       } else {
@@ -102,30 +109,6 @@ export class ProductChartData {
       }
       datas[month] = saleAmount + datas[month];
       totalDay[month]++;
-      startDate = startDate.add(1, 'day');
-    }
-    return this.monthlyAverage(datas, totalDay);
-  }
-
-  private extractPurchasePriceToArray() {
-    const datas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    const totalDay = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    const year = new Date().getFullYear();
-    let startDate = moment(year + '-1-1');
-    let endDate = moment((year + 1) + '-1-1');
-
-    let amount = this.yearlyDataByDay['1-1-' + year] || 0;
-    while (startDate.isBefore(endDate)) {
-      const month = startDate.get('month');
-      let purchaseAmount = this.yearlyPurchaseByDate[this.formatMomentKey(startDate)];
-      if (!purchaseAmount) {
-        purchaseAmount = amount;
-      } else {
-        amount = purchaseAmount;
-      }
-      datas[month] = purchaseAmount + datas[month];
-      totalDay[month]++;
-      startDate = startDate.add(1, 'day');
     }
     return this.monthlyAverage(datas, totalDay);
   }
@@ -141,4 +124,6 @@ export class ProductChartData {
   private formatMomentKey(momentDate) {
     return momentDate.format('DD-MM-YY');
   }
+
+
 }

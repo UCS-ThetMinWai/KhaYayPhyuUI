@@ -36,7 +36,7 @@ mat-list-item:hover {
 .active {
   background-color: #050549;
   color: whitesmoke;
-  border-radius: 5px;
+  border-radius: 0 5px 5px 0;
 
 }
 
@@ -48,7 +48,7 @@ span.active {
 .content:hover, mat-list-item:hover {
   cursor: pointer;
   box-shadow: 0 0 5px #050549;
-  border-radius: 5px;
+  border-radius: 0 5px 5px 0;
   border: thin solid #050549;
 }
 

@@ -1,23 +1,23 @@
 import {Product} from './product';
 
-export class PurchaseOrder {
+export class SaleOrder {
   public id: number = 0;
   public boId: string = '-1';
   public status: string = 'OPEN';
   public packagingType: string = '';
   public quantity: number = 0;
-  public weight: number = 0;
+  public price: number = 0;
   public amount: number = 0;
   public product: Product;
 
   public static createSaleOrder(json: any) {
     json.product = Product.createProduct(json.product);
-    return Object.assign(new PurchaseOrder(), json);
+    return Object.assign(new SaleOrder(), json);
   }
 
   public static createSaleOrderList(jsonArr: any[]) {
-    const list: PurchaseOrder[] = [];
-    jsonArr.forEach(json => list.push(PurchaseOrder.createSaleOrder(json)));
+    const list: SaleOrder[] = [];
+    jsonArr.forEach(json => list.push(SaleOrder.createSaleOrder(json)));
     return list;
   }
 
