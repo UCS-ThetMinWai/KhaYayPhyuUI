@@ -1,4 +1,6 @@
 import {Price} from './price';
+import {PurchasePrice} from './purchase-price';
+import {Purchase} from './purchase';
 
 export class Product {
   public boId: string;
@@ -8,8 +10,9 @@ export class Product {
   public packagingDate: Date;
   public packagingType: string;
   public salePrice: Price;
-  public currentBuyPrice: Price;
-  public salePriceHistory: Price[] = []
+  public purchasePrice: PurchasePrice;
+  public salePriceHistory: Price[] = [];
+  public purchasePriceHistory: PurchasePrice[] = [];
 
   public dataset: any = [
     {data: [], label: 'Series A', borderWidth: 1},
@@ -22,10 +25,17 @@ export class Product {
     productJson.packagingDate = productJson ? new Date() : new Date(productJson.packagingDate);
     productJson.salePrice = Price.createPrice(productJson.salePrice);
     const salePriceHistory = [];
-    for (const temp of productJson.salePriceHistory || [])
-      salePriceHistory.push(Price.createPrice(temp))
+    for (const temp of productJson.salePriceHistory || []) {
+      salePriceHistory.push(Price.createPrice(temp));
+    }
     productJson.salePriceHistory = salePriceHistory;
-    const product =  Object.assign(new Product(), productJson);
+
+    const purchasePriceHistory = [];
+    for (const temp of productJson.purchasePriceHistory || []) {
+      purchasePriceHistory.push(PurchasePrice.createPurchasePrice(temp));
+    }
+    productJson.purchasePriceHistory = purchasePriceHistory;
+    const product = Object.assign(new Product(), productJson);
     product.updateChartLabel();
     product.updateData();
     return product;
@@ -33,7 +43,7 @@ export class Product {
 
   public constructor() {
     this.salePrice = new Price();
-    this.currentBuyPrice = new Price();
+    this.purchasePrice = new PurchasePrice();
   }
 
 
@@ -51,6 +61,14 @@ export class Product {
       saleAmounts.push(price.amount);
     }
     this.dataset[0].data = saleAmounts;
+  }
+
+  private updatePurchaseData() {
+    const purchaseAmount = [];
+    for (const price of this.purchasePriceHistory){
+      purchaseAmount.push(price.amount);
+    }
+    this.dataset[0].data = purchaseAmount;
   }
 
 }

@@ -41,6 +41,7 @@ import {MatTableModule} from '@angular/material/table';
 import {SaleDetailComponent} from "./Sale/sale-detail/sale-detail.component";
 import {DetailPurchaseComponent} from './Purchase/detail-purchase/detail-purchase.component';
 import {ChartsModule} from "ng2-charts";
+import {MomentModule} from 'ngx-moment';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import {ChartsModule} from "ng2-charts";
     MatSelectModule,
     MatIconModule,
     MatTableModule,
-    ChartsModule
+    ChartsModule,
+    MomentModule
   ],
   exports: [MatButtonModule],
   providers: [MatSnackBar],

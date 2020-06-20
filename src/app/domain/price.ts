@@ -7,6 +7,6 @@ export class Price {
   public amount: number;
 
   public static createPrice(json: any) {
-    return Object.assign(new Price(), json)
+    return Object.assign(new Price(), json);
   }
 }

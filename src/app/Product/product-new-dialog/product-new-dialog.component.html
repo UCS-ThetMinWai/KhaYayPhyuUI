@@ -19,10 +19,19 @@
   </div>
   <div class="test">
     <div class="row">
-      <div class="col-3 "> Current Price</div>
+      <div class="col-3 "> Current Sale Price</div>
       <div class="col-9 editable">
-        <input type="number" min="0" required="required" class="target paper" name="product-current-price"
+        <input type="number" min="0" required="required" class="target paper" name="product-current-sale-price"
                [(ngModel)]="product.salePrice.amount"/>
+      </div>
+    </div>
+  </div>
+  <div class="test">
+    <div class="row">
+      <div class="col-3 "> Current Purchase Price</div>
+      <div class="col-9 editable">
+        <input type="number" min="0" required="required" class="target paper" name="product-current-purchase-price"
+               [(ngModel)]="product.purchasePrice.amount"/>
       </div>
     </div>
   </div>

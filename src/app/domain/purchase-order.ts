@@ -21,21 +21,21 @@ export class PurchaseOrder {
   }
 
   public updateAmount() {
-    this.amount = this.weight * (this.product ? this.product.currentBuyPrice.amount : 0);
+    this.amount = this.weight * (this.product ? this.product.purchasePrice.amount : 0);
   }
 
   public updateTotal(quantity) {
-    if (this.product == null || this.product.currentBuyPrice == null)
+    if (this.product == null || this.product.purchasePrice == null)
       return;
     this.quantity = quantity;
-    this.amount = this.quantity * this.product.currentBuyPrice.amount;
+    this.amount = this.quantity * this.product.purchasePrice.amount;
   }
 
   public calculateTotal() {
     if (!this.quantity || !this.product) {
       return 0;
     }
-    return this.weight * this.product.currentBuyPrice.amount;
+    return this.weight * this.product.purchasePrice.amount;
   }
 
   get total() {

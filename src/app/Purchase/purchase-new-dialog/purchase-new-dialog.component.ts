@@ -86,7 +86,7 @@ export class PurchaseNewDialogComponent implements OnInit, AfterViewInit {
     const selectedProduct = this.findProductByBoId(productId);
     if (selectedProduct == null)
       return;
-    if (selectedProduct.currentBuyPrice == null) {
+    if (selectedProduct.purchasePrice == null) {
       return;
     }
     purchaseOrder.quantity = purchaseOrder.quantity || 0;
