@@ -1,4 +1,7 @@
 <mat-card *ngIf="purchase!=null">
+  <div style="position:absolute;right: 10px;">
+    <span class="fa fa-pencil-alt" style="float: left;" (click)="update()" ></span>
+  </div>
   <div class="row" >
     <div class="col-md-3" >ID</div>
     <div class="col-md-9" >{{purchase.boId|uppercase}}</div>
@@ -24,8 +27,8 @@
         <td>{{index+1}}. </td>
         <td>{{po.product.productName}}</td>
         <td>{{po.quantity}}</td>
-        <td>{{po.product.currentBuyPrice.buyAmount}}</td>
-        <td>{{po.total}}</td>
+        <td>{{po.price}}</td>
+        <td class="right">{{po.quantity * po.price}}</td>
       </tr>
     </table>
   </div>

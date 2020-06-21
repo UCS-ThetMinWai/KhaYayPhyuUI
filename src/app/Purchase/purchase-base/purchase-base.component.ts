@@ -13,7 +13,6 @@ export class PurchaseBaseComponent implements OnInit {
 
   purchaseList: Purchase[] = [];
   detailPurchase = null;
-  pruchaseDialog: PurchaseNewDialogComponent;
 
   constructor(private purchaseService: PurchaseService, private dialog: MatDialog) {
   }
@@ -28,8 +27,8 @@ export class PurchaseBaseComponent implements OnInit {
   }
 
   public showDetail(id) {
-    return this.purchaseService.byId(id).subscribe(sale => {
-      this.detailPurchase = sale;
+    return this.purchaseService.byId(id).subscribe(purchase => {
+      this.detailPurchase = purchase;
       console.log(this.detailPurchase);
     });
   }

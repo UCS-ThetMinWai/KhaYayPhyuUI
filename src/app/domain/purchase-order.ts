@@ -1,13 +1,11 @@
 import {Product} from './product';
-import {Purchase} from './purchase';
 
 export class PurchaseOrder {
   public id: number = 0;
   public boId: string = '-1';
   public status: string = 'OPEN';
   public quantity: number = 0;
-  public weight: number = 0.0;
-  public amount: number = 0;
+  public price: number = 0;
   public product: Product;
 
   public constructor() {
@@ -20,29 +18,37 @@ export class PurchaseOrder {
     return Object.assign(new PurchaseOrder(), json);
   }
 
-  public updateAmount() {
-    this.amount = this.weight * (this.product ? this.product.purchasePrice.amount : 0);
+  public static createPurchaseOrderList(jsonArray: any) {
+    jsonArray = jsonArray || [];
+    const list: PurchaseOrder[] = [];
+    jsonArray.forEach(json => list.push(json));
+    return list;
   }
 
   public updateTotal(quantity) {
-    if (this.product == null || this.product.purchasePrice == null)
-      return;
+    console.log('here', this);
     this.quantity = quantity;
-    this.amount = this.quantity * this.product.purchasePrice.amount;
+    if (this.product == null || this.product.purchasePrice == null) {
+      console.log("Null product or purchase price", this.product)
+      return;
+    }
+    this.price = this.quantity * this.product.purchasePrice.amount;
   }
 
   public calculateTotal() {
     if (!this.quantity || !this.product) {
       return 0;
     }
-    return this.weight * this.product.purchasePrice.amount;
+    return this.quantity * this.product.purchasePrice.amount;
   }
 
-  get total() {
-    return this.amount;
+  get liveTotal() {
+    console.log("here");
+    return this.quantity * this.price;
   }
 
   public toString() {
     return 'Sale Order' + this.id;
   }
+
 }

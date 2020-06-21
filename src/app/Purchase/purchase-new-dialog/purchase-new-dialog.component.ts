@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, OnInit, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChildren} from '@angular/core';
 import {Purchase} from '../../domain/purchase';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {PurchaseOrder} from '../../domain/purchase-order';
 import {Customer} from '../../domain/customer';
 import {Product} from '../../domain/product';
@@ -16,8 +16,8 @@ import {Sale} from '../../domain/sale';
   styleUrls: ['./purchase-new-dialog.component.css']
 })
 export class PurchaseNewDialogComponent implements OnInit, AfterViewInit {
+
   purchase: Purchase;
-  purchaseOrderList: PurchaseOrder[];
   customerList: Customer[];
   productList: Product[];
 
@@ -29,16 +29,29 @@ export class PurchaseNewDialogComponent implements OnInit, AfterViewInit {
   @ViewChildren('productSelection')
   productSelection;
 
-  constructor(private dialogRef: MatDialogRef<Purchase>, private snackBar: MatSnackBar, private httpClient: HttpClient, private productService: ProductService, private customerService: CustomerService) {
-    this.purchase = new Purchase();
+  public static createDialog(dialog: MatDialog) {
+    const dialogRef = dialog.open(PurchaseNewDialogComponent);
+  }
+
+  public static editDialog(dialog: MatDialog, purchase: Purchase) {
+    console.log(purchase)
+    const dialogRef = dialog.open(PurchaseNewDialogComponent, {data:purchase});
+
+  }
+
+  constructor(private dialogRef: MatDialogRef<Purchase>,
+              private snackBar: MatSnackBar,
+              private httpClient: HttpClient,
+              private productService: ProductService,
+              @Inject(MAT_DIALOG_DATA) private data: Purchase,
+              private customerService: CustomerService) {
+    this.purchase = this.data || new Purchase();
+    console.log(this.purchase);
   }
 
   ngOnInit(): void {
-    this.purchase = new Purchase();
     this.initializeCustomer();
     this.purchase.purchaseOrderList.push(new PurchaseOrder());
-    this.purchase.customer = new Customer();
-    this.purchase.purchaseDate = new Date();
     this.productService.searchWithProduct().subscribe(productList => {
       this.productList = productList;
     });
@@ -90,15 +103,15 @@ export class PurchaseNewDialogComponent implements OnInit, AfterViewInit {
       return;
     }
     purchaseOrder.quantity = purchaseOrder.quantity || 0;
-    purchaseOrder.updateAmount();
     purchaseOrder.product = selectedProduct;
     this.purchase.updateTotal();
     this.productQuantity.toArray()[index].nativeElement.focus();
   }
 
-  updatePriceForQuantity(purchaseOrder: PurchaseOrder, weight: any, index: number) {
-    purchaseOrder.updateTotal(parseInt(weight));
-    this.purchase.updateTotal();
+  updatePriceForQuantity(purchaseOrder: PurchaseOrder, qty: number, index: number) {
+    purchaseOrder.updateTotal(qty);
+    //this.purchase.updateTotal();
+    console.log("Quantity :%s", qty);
     if (index == this.purchase.purchaseOrderList.length - 1) {
       this.purchase.purchaseOrderList.push(new PurchaseOrder());
       setTimeout(() => {

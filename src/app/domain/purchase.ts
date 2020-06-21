@@ -18,14 +18,9 @@ export class Purchase {
   }
 
   public static createPurchase(json: any) {
-    const purchase = new Purchase();
-    purchase.id = json.id;
-    purchase.boId = json.boId;
-    purchase.status = json.status;
-    purchase.purchaseDate = new Date(json.purchaseDate);
-    purchase.payAmount = json.payAmount;
-    purchase.total = json.total;
-    return purchase;
+    json.customer = Customer.createCustomer(json.customer);
+    json.purchaseOrderList = PurchaseOrder.createPurchaseOrderList(json.purchaseOrderList);
+    return Object.assign(new Purchase(), json);
   }
 
   public totalBalance() {
@@ -33,8 +28,7 @@ export class Purchase {
   }
 
   public updateTotal() {
-    this.total = 0;
-    this.purchaseOrderList.forEach(saleOrder => this.total += saleOrder.product ? saleOrder.calculateTotal() : 0);
+    this.total = this.purchaseOrderList.map(po => po.price * po.quantity).reduce((a, b) => a + b);
   }
 
   public removePurchaseOrder(index) {
@@ -42,7 +36,7 @@ export class Purchase {
   }
 
   get liveTotal() {
-    this.updateTotal();
-    return this.total;
+   //  console.log("here" + this.purchaseOrderList.map(po => po.price * po.quantity).reduce((a,b) => a + b));
+    return this.purchaseOrderList.map(po => po.price * po.quantity).reduce((a,b) => a + b);
   }
 }

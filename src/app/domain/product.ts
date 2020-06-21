@@ -39,7 +39,6 @@ export class Product {
     const product = Object.assign(new Product(), productJson);
     product.updateChartLabel();
     product.updateData();
-    console.log(product);
     return product;
   }
 
