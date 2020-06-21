@@ -25,13 +25,13 @@
       </div>
     </div>
     <div class="test">
-      <div class="row" (dblclick)="show('peckagingType')">
-        <div class="col-3 " style="width: 200px; height: 50px">Pecking Type</div>
+      <div class="row" (dblclick)="show('packagingType')">
+        <div class="col-3 " style="width: 200px; height: 50px">Packaging Type</div>
         <div class="col-9 editable">
-          <span [hidden]="isDisabledEdit('peckagingType')" name="target">: {{detailProduct.peckagingType}} </span>
-          <mat-select class="target paper" [(ngModel)]="detailProduct.peckagingType" name="packingType"
-                      (selectionChange)="hideAndSave('peckagingType')"
-                      [hidden]="isEnableEdit('peckagingType')">
+          <span [hidden]="isDisabledEdit('packagingType')" name="target">: {{detailProduct.packagingType}} </span>
+          <mat-select class="target paper" [(ngModel)]="detailProduct.packagingType" name="packingType"
+                      (selectionChange)="hideAndSave('packagingType')"
+                      [hidden]="isEnableEdit('packagingType')">
             <mat-option value="PACK">PACK</mat-option>
             <mat-option value="CARD">CARD</mat-option>
           </mat-select>
@@ -55,11 +55,11 @@
         <div class="col-3 " style="width: 200px; height: 50px">Pecking Date</div>
         <div class="col-9 editable">
           <span [hidden]="isDisabledEdit('peckagingDate')"
-                name="target">: {{detailProduct.peckagingDate | date}} </span>
+                name="target">: {{detailProduct.packagingDate | date}} </span>
           <input type="date" class="target paper" name="product-peckin-date"
-                 (keydown.enter)="hideAndSave('peckagingDate')"
-                 [(ngModel)]="detailProduct.peckagingDate"
-                 [hidden]="isEnableEdit('peckagingDate')"/>
+                 (keydown.enter)="hideAndSave('packagingDate')"
+                 [(ngModel)]="detailProduct.packagingDate"
+                 [hidden]="isEnableEdit('packagingDate')"/>
         </div>
       </div>
     </div>

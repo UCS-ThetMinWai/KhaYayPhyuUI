@@ -14,6 +14,7 @@ export class Sale {
   public static createSale(json: any) {
     json.customer = Customer.createCustomer(json);
     json.saleOrderList = SaleOrder.createSaleOrderList(json.saleOrderList || []);
+    console.log(json.total);
     return Object.assign(new Sale(), json);
   }
 
