@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   title = 'kyp-ui';
 
-  selected = 'purchase';
+  selected = 'product';
 
   searchResultText: string = '';
 

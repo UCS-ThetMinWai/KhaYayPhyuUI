@@ -50,9 +50,14 @@ export class ProductBaseComponent implements OnInit {
     });
   }
 
+  public edit() {
+    ProductNewDialogComponent.edit(this.detailProduct, this.dialog).afterClosed().subscribe(product => this.saveToDb(product));
+  }
+
   public showDetail(id) {
     this.productService.byId(id).subscribe(product => {
       this.detailProduct = product;
+      console.log(this.detailProduct);
       const updatedIndex = this.findIndexOfProductFromList(product);
       this.productList[updatedIndex] = this.detailProduct;
       this.chartData = new ProductChartData(product);
@@ -81,6 +86,17 @@ export class ProductBaseComponent implements OnInit {
           this.removeProductFromList(product);
         }
       });
+    });
+  }
+
+  private saveToDb(product) {
+    if (product == null)
+      return;
+    this.productService.save(product).subscribe(pProduct => {
+      this.openSnackBar('Save', 'success!');
+    }, error => {
+      console.error(error);
+      this.openSnackBar('Message', 'Error');
     });
   }
 

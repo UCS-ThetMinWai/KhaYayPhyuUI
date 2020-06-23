@@ -1,6 +1,7 @@
 import {Price} from './price';
 import {PurchasePrice} from './purchase-price';
 import {Purchase} from './purchase';
+import {Item} from "./item";
 
 export class Product {
   public boId: string;
@@ -14,6 +15,8 @@ export class Product {
   public salePriceHistory: Price[] = [];
   public purchasePriceHistory: PurchasePrice[] = [];
 
+  public itemList: Item[] = [];
+
   public dataset: any = [
     {data: [], label: 'Series A', borderWidth: 1},
     {data: [4500, 3500, 4000, 6200, 86, 27, 90], label: 'Series B', borderWidth: 1}];
@@ -24,12 +27,12 @@ export class Product {
     productJson = productJson || {};
     productJson.packagingDate = productJson ? new Date() : new Date(productJson.packagingDate);
     productJson.salePrice = Price.createPrice(productJson.salePrice);
+    productJson.itemList = Item.createList(productJson.itemList || []);
     const salePriceHistory = [];
     for (const temp of productJson.salePriceHistory || []) {
       salePriceHistory.push(Price.createPrice(temp));
     }
     productJson.salePriceHistory = salePriceHistory;
-
     const purchasePriceHistory = [];
     for (const temp of productJson.purchasePriceHistory || []) {
       purchasePriceHistory.push(PurchasePrice.createPurchasePrice(temp));
@@ -37,14 +40,15 @@ export class Product {
     productJson.purchasePriceHistory = purchasePriceHistory;
     productJson.purchasePrice = Price.createPrice(productJson.purchasePrice)
     const product = Object.assign(new Product(), productJson);
-    product.updateChartLabel();
-    product.updateData();
+    //product.updateChartLabel();
+   // product.updateData();
     return product;
   }
 
   public constructor() {
     this.salePrice = new Price();
     this.purchasePrice = new PurchasePrice();
+    this.itemList = [];
   }
 
 
@@ -66,10 +70,19 @@ export class Product {
 
   private updatePurchaseData() {
     const purchaseAmount = [];
-    for (const price of this.purchasePriceHistory){
+    for (const price of this.purchasePriceHistory) {
       purchaseAmount.push(price.amount);
     }
     this.dataset[0].data = purchaseAmount;
+  }
+
+  public isSame(product) {
+    console.log(this.id, product.id,this.id === product.id )
+    return this.id === product.id;
+  }
+
+  public isNotSame(product) {
+    return !this.isSame(product);
   }
 
 }

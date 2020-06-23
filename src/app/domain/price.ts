@@ -8,7 +8,6 @@ export class Price {
 
   constructor() {
     this.date = new Date();
-
   }
 
 

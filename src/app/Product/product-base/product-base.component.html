@@ -6,6 +6,7 @@
 </mat-list>
 <div class="right" *ngIf="detailProduct != null" style="hight: 400px;vertical-align: top;">
   <div>
+    <span class="fa fa-pencil-alt" (click)="edit()" ></span>
     <div class="test">
       <div class="row" (dblclick)="show('productName')">
         <div class="col-3 " style="width: 200px; height: 50px">Product Name</div>

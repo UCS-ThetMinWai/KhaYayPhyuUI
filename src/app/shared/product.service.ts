@@ -29,11 +29,14 @@ export class ProductService {
   }
 
   public save(product: Product) {
-    console.log(product);
-    return this.httpClient.post(this.getBaseURL() + '/', product);
+    return this.httpClient.post<boolean>(this.getBaseURL() + '/', product);
   }
 
   public searchWithProduct() {
+    return this.getAll();
+  }
+
+  public getAll() {
     return this.httpClient.get<Product[]>(this.getBaseURL()).pipe(map(xs => {
       const productList = [];
       for (const x of xs) {

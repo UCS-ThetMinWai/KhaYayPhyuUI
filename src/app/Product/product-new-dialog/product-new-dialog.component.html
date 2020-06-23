@@ -1,4 +1,4 @@
-<form>
+<form style="max-height: 100vh;overflow: auto">
   <div class="test">
     <div class="row">
       <div class="col-3 "> Product Name</div>
@@ -19,7 +19,7 @@
   </div>
   <div class="test">
     <div class="row">
-      <div class="col-3 "> Current Sale Price</div>
+      <div class="col-3 "> Sale</div>
       <div class="col-9 editable">
         <input type="number" min="0" required="required" class="target paper" name="product-current-sale-price"
                [(ngModel)]="product.salePrice.amount"/>
@@ -28,7 +28,7 @@
   </div>
   <div class="test">
     <div class="row">
-      <div class="col-3 "> Current Purchase Price</div>
+      <div class="col-3 "> Purchase</div>
       <div class="col-9 editable">
         <input type="number" min="0" required="required" class="target paper" name="product-current-purchase-price"
                [(ngModel)]="product.purchasePrice.amount"/>
@@ -37,7 +37,7 @@
   </div>
   <div class="test">
     <div class="row">
-      <div class="col-3 ">Pecking Type</div>
+      <div class="col-3 ">Packing Type</div>
       <div class="col-9 editable">
         <mat-select [(ngModel)]="product.packagingType" name="packingType">
           <mat-option value="PACK">PACK</mat-option>
@@ -46,7 +46,30 @@
       </div>
     </div>
   </div>
-
+  <table class="table table-striped">
+    <tr>
+      <th width="50">#</th>
+      <th>Name</th>
+      <th>Qty</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let item of product.itemList;let i = index">
+      <td>{{i + 1}} .</td>
+      <td>{{item.product.productName}}</td>
+      <td><input type="text" [(ngModel)]="item.quantity" name="item-quantity-{{i}}"/></td>
+      <td><span class="fa fa-trash-alt" (click)="addToProductList(item.product, i)"></span></td>
+      <td>{{item.quantity}}</td>
+    </tr>
+  </table>
+  <table class="table table-striped">
+    <tr *ngFor="let p of productList;let i = index" (click)="updateProductList(p, i)">
+      <td width="50">{{i + 1}} .</td>
+      <td>{{p.productName}}</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
   <div class="footer">
     <button mat-raised-button color="warn" class="reset-button" (click)="closeDialog()">Cancel</button>
     <button mat-raised-button color="primary" (click)="save()">Save</button>
