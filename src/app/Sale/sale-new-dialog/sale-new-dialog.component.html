@@ -1,10 +1,11 @@
 <form style="width: 800px;height: calc(100vh - 100px);">
-  <span style="color: red" class="cancel-button fa fa-times-circle"  style="color:tomato;padding:3px;" (click)="closeDialog()" ></span>
+  <span style="color: red" class="cancel-button fa fa-times-circle" style="color:tomato;padding:3px;" (click)="closeDialog()"></span>
   <mat-form-field style="width:80%;">
     <mat-label>Customer Name</mat-label>
-    <mat-select name="customer-name">
+    <mat-select name="customer-name" [(value)]="sale.customer.name">
       <mat-option *ngFor="let customer of customerList" (click)="updateCustomer(customer)"
-                  [value]="customer.name">{{customer.name}}</mat-option>
+                  [value]="customer.name">{{customer.name}}
+      </mat-option>
     </mat-select>
   </mat-form-field>
   <table class="table table-striped" style="margin-bottom: 0px;">
@@ -14,7 +15,7 @@
       <th width="100" class="number">Price</th>
       <th width="100" class="number">Qty</th>
       <th width="100" class="number"></th>
-      <th width="50"(click)="addNewSaleOrder()"><span class="fa fa-plus" style="color: #5cb85c "></span></th>
+      <th width="50" (click)="addNewSaleOrder()"><span class="fa fa-plus" style="color: #5cb85c "></span></th>
     </tr>
   </table>
   <div style="max-height: 300px;overflow: auto;">
@@ -24,19 +25,19 @@
         <td>
           <input matInput type="text" list="name" name="sale-order-name-{{i}}"
                  (change)="updatePriceForName(saleOrder, $event.target.value, i)"
-                 #productSelection
-                 (blur)="updatePriceForName(saleOrder, $event.target.value, i)" />
+                 #productSelection value="{{saleOrder.product.productName}}"
+                 (blur)="updatePriceForName(saleOrder, $event.target.value, i)"/>
         </td>
         <td width="100" class="number"> {{saleOrder.product != null ? saleOrder.product.salePrice.amount : 0}}</td>
         <td width="100" class="number">
-          <input matInput style="border: thin solid black;text-align: left;border:none;" type="number" min="1" list="quantity" name="quantity-{{i}}"
-                 #productQuantity
-                 (change)="updatePriceForQuantity(saleOrder, $event.target.value, i)">
+          <input matInput style="border: thin solid black;text-align: left;border:none;" type="number" min="1" name="quantity-{{i}}"
+                 #productQuantity value="{{saleOrder.quantity}}"
+                 (change)="updatePriceForQuantity(saleOrder, $event.target.value, i)"/>
         </td>
         <td width="100" class="number">
-          {{saleOrder.amount}}
+          {{saleOrder.price * saleOrder.quantity}}
         </td>
-        <td width="50" (click)="sale.removeSaleOrder(i)"><span class="fa fa-trash-alt" style="color: tomato" ></span></td>
+        <td width="50" (click)="sale.removeSaleOrder(i)"><span class="fa fa-trash-alt" style="color: tomato"></span></td>
       </tr>
     </table>
   </div>

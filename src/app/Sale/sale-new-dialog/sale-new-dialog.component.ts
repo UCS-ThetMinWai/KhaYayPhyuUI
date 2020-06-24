@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import {AfterViewInit, Component, Inject, OnInit, ViewChildren} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Sale} from '../../domain/sale';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {HttpClient} from '@angular/common/http';
@@ -8,6 +8,7 @@ import {ProductService} from '../../shared/product.service';
 import {CustomerService} from '../../shared/customer.service';
 import {Product} from '../../domain/product';
 import {Customer} from '../../domain/customer';
+import {PurchaseOrder} from '../../domain/purchase-order';
 
 @Component({
   selector: 'app-sale-new-dialog',
@@ -16,7 +17,6 @@ import {Customer} from '../../domain/customer';
 })
 export class SaleNewDialogComponent implements OnInit, AfterViewInit {
   sale: Sale;
-  saleOrderList: SaleOrder[];
   customerList: Customer[];
   productList: Product[];
 
@@ -28,20 +28,21 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
   @ViewChildren('productSelection')
   productSelection;
 
-  constructor(private dialogRef: MatDialogRef<Sale>, private snackBar: MatSnackBar, private httpClient: HttpClient, private productService: ProductService, private customerService: CustomerService) {
-    this.sale = new Sale();
+  public static editDialog(dialog: MatDialog, sale: Sale) {
+    console.log(sale);
+    const dialogRef = dialog.open(SaleNewDialogComponent, {data: sale});
   }
 
-  ngAfterViewInit(): void {
+  constructor(private dialogRef: MatDialogRef<Sale>, private snackBar: MatSnackBar, private httpClient: HttpClient, private productService: ProductService, @Inject(MAT_DIALOG_DATA) private data: Sale, private customerService: CustomerService) {
+    this.sale = this.data || new Sale();
 
   }
 
   ngOnInit(): void {
-    this.sale = new Sale();
     this.initializeCustomer();
-    this.sale.saleOrderList.push(new SaleOrder());
-    this.sale.customer = new Customer();
-    this.sale.saleDate = new Date();
+    if (this.sale.saleOrderList.length <= 0) {
+      this.sale.saleOrderList.push(new SaleOrder());
+    }
     this.productService.searchWithProduct().subscribe(productList => {
       this.productList = productList;
     });
@@ -72,11 +73,6 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public initializeSaleOrder() {
-    this.saleOrderList = [];
-    // this.saleOrderList = this.sale.saleOrder.product.productName;
-  }
-
   public updateCustomer(customer: Customer) {
     this.sale.customer = customer;
   }
@@ -102,28 +98,31 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
   updatePriceForName(saleOrder: SaleOrder, productStr: string, index: number) {
     const productId = productStr.split(':')[1];
     const selectedProduct = this.findProductByBoId(productId);
-    if (selectedProduct == null)
+    if (selectedProduct == null) {
       return;
+    }
     if (selectedProduct.salePrice == null) {
       return;
     }
-    saleOrder.price = selectedProduct.salePrice.amount;
     saleOrder.quantity = saleOrder.quantity || 0;
-    saleOrder.updateAmount();
     saleOrder.product = selectedProduct;
     this.sale.updateTotal();
     this.productQuantity.toArray()[index].nativeElement.focus();
   }
 
-  updatePriceForQuantity(saleOrder: SaleOrder, quantity: any, index: number) {
-    saleOrder.updateTotal(parseInt(quantity));
-    this.sale.updateTotal();
+  updatePriceForQuantity(saleOrder: SaleOrder, qty: number, index: number) {
+
+    console.log('Quantity :%s', qty);
     if (index == this.sale.saleOrderList.length - 1) {
       this.sale.saleOrderList.push(new SaleOrder());
       setTimeout(() => {
         this.productSelection.toArray()[index + 1].nativeElement.focus();
       }, 10);
+      saleOrder.updateTotal(qty);
     }
   }
 
+  ngAfterViewInit(): void {
+
+  }
 }

@@ -8,7 +8,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {HttpClient} from '@angular/common/http';
 import {ProductService} from '../../shared/product.service';
 import {CustomerService} from '../../shared/customer.service';
-import {Sale} from '../../domain/sale';
+import {SaleOrder} from '../../domain/sale-order';
 
 @Component({
   selector: 'app-purchase-new-dialog',
@@ -34,8 +34,8 @@ export class PurchaseNewDialogComponent implements OnInit, AfterViewInit {
   }
 
   public static editDialog(dialog: MatDialog, purchase: Purchase) {
-    console.log(purchase)
-    const dialogRef = dialog.open(PurchaseNewDialogComponent, {data:purchase});
+    console.log(purchase);
+    const dialogRef = dialog.open(PurchaseNewDialogComponent, {data: purchase});
 
   }
 
@@ -97,8 +97,9 @@ export class PurchaseNewDialogComponent implements OnInit, AfterViewInit {
   updatePriceForName(purchaseOrder: PurchaseOrder, productStr: string, index: number) {
     const productId = productStr.split(':')[1];
     const selectedProduct = this.findProductByBoId(productId);
-    if (selectedProduct == null)
+    if (selectedProduct == null) {
       return;
+    }
     if (selectedProduct.purchasePrice == null) {
       return;
     }
@@ -110,8 +111,7 @@ export class PurchaseNewDialogComponent implements OnInit, AfterViewInit {
 
   updatePriceForQuantity(purchaseOrder: PurchaseOrder, qty: number, index: number) {
     purchaseOrder.updateTotal(qty);
-    //this.purchase.updateTotal();
-    console.log("Quantity :%s", qty);
+    console.log('Quantity :%s', qty);
     if (index == this.purchase.purchaseOrderList.length - 1) {
       this.purchase.purchaseOrderList.push(new PurchaseOrder());
       setTimeout(() => {

@@ -1,7 +1,7 @@
 import {Price} from './price';
 import {PurchasePrice} from './purchase-price';
 import {Purchase} from './purchase';
-import {Item} from "./item";
+import {Item} from './item';
 
 export class Product {
   public boId: string;
@@ -28,20 +28,22 @@ export class Product {
     productJson.packagingDate = productJson ? new Date() : new Date(productJson.packagingDate);
     productJson.salePrice = Price.createPrice(productJson.salePrice);
     productJson.itemList = Item.createList(productJson.itemList || []);
+
     const salePriceHistory = [];
     for (const temp of productJson.salePriceHistory || []) {
       salePriceHistory.push(Price.createPrice(temp));
     }
     productJson.salePriceHistory = salePriceHistory;
+    productJson.salePrice = Price.createPrice(productJson.salePrice);
+
     const purchasePriceHistory = [];
     for (const temp of productJson.purchasePriceHistory || []) {
       purchasePriceHistory.push(PurchasePrice.createPurchasePrice(temp));
     }
     productJson.purchasePriceHistory = purchasePriceHistory;
-    productJson.purchasePrice = Price.createPrice(productJson.purchasePrice)
+    productJson.purchasePrice = PurchasePrice.createPurchasePrice(productJson.purchasePrice);
     const product = Object.assign(new Product(), productJson);
-    //product.updateChartLabel();
-   // product.updateData();
+
     return product;
   }
 
@@ -77,7 +79,7 @@ export class Product {
   }
 
   public isSame(product) {
-    console.log(this.id, product.id,this.id === product.id )
+    console.log(this.id, product.id, this.id === product.id);
     return this.id === product.id;
   }
 

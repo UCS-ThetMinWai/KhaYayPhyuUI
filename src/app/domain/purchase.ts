@@ -37,6 +37,6 @@ export class Purchase {
 
   get liveTotal() {
    //  console.log("here" + this.purchaseOrderList.map(po => po.price * po.quantity).reduce((a,b) => a + b));
-    return this.purchaseOrderList.map(po => po.price * po.quantity).reduce((a,b) => a + b);
+    return this.purchaseOrderList.map(po => po.price * po.quantity).reduce((a, b) => a + b);
   }
 }

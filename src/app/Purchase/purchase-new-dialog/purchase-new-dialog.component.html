@@ -31,7 +31,7 @@
         <td width="100" class="number"> {{purchaseOrder.product != null ? purchaseOrder.product.purchasePrice.amount : 0}}</td>
         <td width="100" class="number">
           <input matInput style="border: thin solid black;text-align: left;border:none;" type="number" min="1" name="quantity-{{i}}"
-                 #productQuantity
+                 #productQuantity value="{{purchaseOrder.quantity}}"
                  (change)="updatePriceForQuantity(purchaseOrder, $event.target.value, i)"/>
         </td>
         <td width="100" class="number">

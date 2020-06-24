@@ -3,6 +3,7 @@ import {SaleService} from '../../shared/sale.service';
 import {Sale} from '../../domain/sale';
 import {MatDialog} from '@angular/material/dialog';
 import {SaleNewDialogComponent} from '../sale-new-dialog/sale-new-dialog.component';
+import {SaleOrder} from '../../domain/sale-order';
 
 @Component({
   selector: 'app-sale-base',
@@ -11,6 +12,7 @@ import {SaleNewDialogComponent} from '../sale-new-dialog/sale-new-dialog.compone
 })
 export class SaleBaseComponent implements OnInit {
   saleList: Sale[] = [];
+  saleOrderList: SaleOrder[] = [];
   detailSale = null;
   saleDialog: SaleNewDialogComponent;
 
@@ -54,7 +56,7 @@ export class SaleBaseComponent implements OnInit {
   public saleReport() {
     this.detailSale = null;
     this.saleList = [];
-    this.viewReport = !this.viewReport
+    this.viewReport = !this.viewReport;
   }
 
   public save() {

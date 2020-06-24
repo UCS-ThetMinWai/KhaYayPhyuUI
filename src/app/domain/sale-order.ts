@@ -4,11 +4,15 @@ export class SaleOrder {
   public id: number = 0;
   public boId: string = '-1';
   public status: string = 'OPEN';
-  public packagingType: string = '';
   public quantity: number = 0;
   public price: number = 0;
   public amount: number = 0;
   public product: Product;
+
+  public constructor() {
+    this.id = 0;
+    this.product = new Product();
+  }
 
   public static createSaleOrder(json: any) {
     json.product = Product.createProduct(json.product);
@@ -16,39 +20,21 @@ export class SaleOrder {
   }
 
   public static createSaleOrderList(jsonArr: any[]) {
-    const list: SaleOrder[] = [];
-    jsonArr.forEach(json => list.push(SaleOrder.createSaleOrder(json)));
-    return list;
-  }
-
-  public updateAmount() {
-    this.amount = this.quantity * (this.product ? this.product.salePrice.amount : 0);
-  }
-
-  public constructor() {
-    this.id = 0;
-    this.product = new Product();
+    jsonArr = jsonArr || [];
+    jsonArr = jsonArr.map(json => SaleOrder.createSaleOrder(json));
+    return jsonArr || [];
   }
 
   public updateTotal(quantity) {
-    if (this.product == null || this.product.salePrice == null)
-      return;
     this.quantity = quantity;
-    this.amount = this.quantity * this.product.salePrice.amount;
-  }
-
-  public calculateTotal() {
-    if (!this.quantity || !this.product)
-      return 0;
-    return this.quantity * this.product.salePrice.amount;
-  }
-
-  get total() {
-    return this.amount;
+    if (this.product == null || this.product.salePrice == null) {
+      return;
+    }
+    this.price = this.quantity * this.product.salePrice.amount;
   }
 
   public toString() {
-    return "Sale Order" + this.id;
+    return 'Sale Order' + this.id;
   }
 
 }

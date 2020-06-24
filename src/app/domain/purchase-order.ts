@@ -18,11 +18,9 @@ export class PurchaseOrder {
     return Object.assign(new PurchaseOrder(), json);
   }
 
-  public static createPurchaseOrderList(jsonArray: any) {
+  public static createPurchaseOrderList(jsonArray: any[]) {
     jsonArray = jsonArray || [];
-    const list: PurchaseOrder[] = [];
-    jsonArray.forEach(json => list.push(json));
-    return list;
+    return jsonArray.map(json => PurchaseOrder.createPurchaseOrder(json));
   }
 
   public updateTotal(quantity) {
@@ -48,7 +46,7 @@ export class PurchaseOrder {
   }
 
   public toString() {
-    return 'Sale Order' + this.id;
+    return 'Purchase Order' + this.id;
   }
 
 }

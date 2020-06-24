@@ -14,7 +14,6 @@ export class Sale {
   public static createSale(json: any) {
     json.customer = Customer.createCustomer(json);
     json.saleOrderList = SaleOrder.createSaleOrderList(json.saleOrderList || []);
-    console.log(json.total);
     return Object.assign(new Sale(), json);
   }
 
@@ -29,8 +28,7 @@ export class Sale {
   }
 
   public updateTotal() {
-    this.total = 0;
-    this.saleOrderList.forEach(saleOrder => this.total += saleOrder.product ? saleOrder.calculateTotal() : 0);
+    this.total = this.saleOrderList.map(so => so.price * so.quantity).reduce((a, b) => a + b);
   }
 
   public removeSaleOrder(index) {
@@ -38,7 +36,7 @@ export class Sale {
   }
 
   get liveTotal() {
-    this.updateTotal();
-    return this.total;
+
+    return this.saleOrderList.length <= 0 ? 0 : this.saleOrderList.map(so => so.price * so.quantity).reduce((a, b) => a + b);
   }
 }
