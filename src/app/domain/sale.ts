@@ -12,7 +12,7 @@ export class Sale {
   public customer: Customer;
 
   public static createSale(json: any) {
-    json.customer = Customer.createCustomer(json);
+    json.customer = Customer.createCustomer(json.customer);
     json.saleOrderList = SaleOrder.createSaleOrderList(json.saleOrderList || []);
     return Object.assign(new Sale(), json);
   }

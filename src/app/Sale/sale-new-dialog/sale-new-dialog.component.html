@@ -35,7 +35,7 @@
                  (change)="updatePriceForQuantity(saleOrder, $event.target.value, i)"/>
         </td>
         <td width="100" class="number">
-          {{saleOrder.price * saleOrder.quantity}}
+          {{saleOrder.amount}}
         </td>
         <td width="50" (click)="sale.removeSaleOrder(i)"><span class="fa fa-trash-alt" style="color: tomato"></span></td>
       </tr>

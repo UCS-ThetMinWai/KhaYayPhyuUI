@@ -30,7 +30,7 @@ export class SaleOrder {
     if (this.product == null || this.product.salePrice == null) {
       return;
     }
-    this.price = this.quantity * this.product.salePrice.amount;
+    this.amount = this.quantity * this.price;
   }
 
   public toString() {

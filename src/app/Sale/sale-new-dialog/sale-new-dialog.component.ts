@@ -28,9 +28,14 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
   @ViewChildren('productSelection')
   productSelection;
 
+  public static edit(sale: Sale, dialog: MatDialog) {
+    return dialog.open(SaleNewDialogComponent, {data: sale});
+  }
+
   public static editDialog(dialog: MatDialog, sale: Sale) {
-    console.log(sale);
+    console.log('Sale :', sale);
     const dialogRef = dialog.open(SaleNewDialogComponent, {data: sale});
+    return dialogRef;
   }
 
   constructor(private dialogRef: MatDialogRef<Sale>, private snackBar: MatSnackBar, private httpClient: HttpClient, private productService: ProductService, @Inject(MAT_DIALOG_DATA) private data: Sale, private customerService: CustomerService) {
@@ -49,6 +54,7 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
   }
 
   public save() {
+    console.log('here', this.sale);
     this.dialogRef.close(this.sale);
   }
 
@@ -102,23 +108,24 @@ export class SaleNewDialogComponent implements OnInit, AfterViewInit {
       return;
     }
     if (selectedProduct.salePrice == null) {
+      console.log("Sale Price: ", saleOrder.price);
       return;
     }
     saleOrder.quantity = saleOrder.quantity || 0;
     saleOrder.product = selectedProduct;
+    saleOrder.price = selectedProduct.salePrice.amount;
     this.sale.updateTotal();
     this.productQuantity.toArray()[index].nativeElement.focus();
   }
 
   updatePriceForQuantity(saleOrder: SaleOrder, qty: number, index: number) {
-
+    saleOrder.updateTotal(qty);
     console.log('Quantity :%s', qty);
     if (index == this.sale.saleOrderList.length - 1) {
       this.sale.saleOrderList.push(new SaleOrder());
       setTimeout(() => {
         this.productSelection.toArray()[index + 1].nativeElement.focus();
       }, 10);
-      saleOrder.updateTotal(qty);
     }
   }
 

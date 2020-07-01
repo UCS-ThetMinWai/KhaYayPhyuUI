@@ -13,14 +13,21 @@ export class SaleDetailComponent implements OnInit {
 
   @Input() sale: Sale;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private saleService: SaleService) {
+  }
 
   ngOnInit(): void {
   }
 
   public update() {
-    SaleNewDialogComponent.editDialog(this.dialog, this.sale);
-    console.log("update" , this.sale);
+    SaleNewDialogComponent.editDialog(this.dialog, this.sale).afterClosed().subscribe(sale => {
+      if (sale == null) {
+        return;
+      }
+      this.saleService.save(sale).subscribe(result => {
+        console.log('here');
+      });
+    });
   }
 
 }

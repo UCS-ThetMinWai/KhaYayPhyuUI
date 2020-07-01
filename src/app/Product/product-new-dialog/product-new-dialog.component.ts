@@ -63,8 +63,8 @@ export class ProductNewDialogComponent implements OnInit {
   }
 
   private filter(productList: Product[]) {
-    productList = productList.filter(product => this.product.isNotSame(product))
-    this.product.itemList.forEach(item => productList = productList.filter(product => item.product.isNotSame(product)))
+    productList = productList.filter(product => this.product.isNotSame(product));
+    this.product.itemList.forEach(item => productList = productList.filter(product => item.product.isNotSame(product)));
     return productList;
   }
 }

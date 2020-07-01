@@ -7,6 +7,10 @@
     <div class="col-md-9">{{sale.boId|uppercase}}</div>
   </div>
   <div class="row">
+    <div class="col-3">Customer Name</div>
+    <div class="col-md-9">{{sale.customer.name}}</div>
+  </div>
+  <div class="row">
     <div class="col-md-3">Date</div>
     <div class="col-md-9">{{sale.saleDate|date}}</div>
   </div>
@@ -28,7 +32,7 @@
         <td>{{so.product.productName}}</td>
         <td>{{so.quantity}}</td>
         <td>{{so.price}}</td>
-        <td class="right">{{so.price * so.quantity}}</td>
+        <td class="right">{{so.amount}}</td>
       </tr>
     </table>
   </div>

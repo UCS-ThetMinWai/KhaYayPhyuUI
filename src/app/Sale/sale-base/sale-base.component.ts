@@ -4,6 +4,8 @@ import {Sale} from '../../domain/sale';
 import {MatDialog} from '@angular/material/dialog';
 import {SaleNewDialogComponent} from '../sale-new-dialog/sale-new-dialog.component';
 import {SaleOrder} from '../../domain/sale-order';
+import {ProductNewDialogComponent} from '../../Product/product-new-dialog/product-new-dialog.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sale-base',
@@ -18,7 +20,8 @@ export class SaleBaseComponent implements OnInit {
 
   viewReport = false;
 
-  constructor(private saleService: SaleService, private dialog: MatDialog) { }
+  constructor(private saleService: SaleService, private dialog: MatDialog, private snackBar: MatSnackBar) {
+  }
 
   ngOnInit(): void {
   }
@@ -29,10 +32,17 @@ export class SaleBaseComponent implements OnInit {
     });
   }
 
+  public edit() {
+    SaleNewDialogComponent.edit(this.detailSale, this.dialog).afterClosed().subscribe(sale => {
+      if (sale != null) {
+        this.saveToDb(sale);
+      }
+    });
+  }
+
   public showDetail(id) {
     return this.saleService.byId(id).subscribe(sale => {
       this.detailSale = sale;
-      console.log(this.detailSale);
     });
   }
 
@@ -53,6 +63,18 @@ export class SaleBaseComponent implements OnInit {
     });
   }
 
+  private saveToDb(sale) {
+    if (sale == null) {
+      return;
+    }
+    this.saleService.save(sale).subscribe(pSale => {
+      this.openSnackBar('Save', 'success!');
+    }, error => {
+      console.error(error);
+      this.openSnackBar('Message', 'Error');
+    });
+  }
+
   public saleReport() {
     this.detailSale = null;
     this.saleList = [];
@@ -62,6 +84,13 @@ export class SaleBaseComponent implements OnInit {
   public save() {
     this.saleService.save(this.detailSale).subscribe(status => {
       window.alert('Success');
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    console.log('here');
+    this.snackBar.open(message, action, {
+      duration: 2000,
     });
   }
 
